@@ -1,0 +1,21 @@
+{% extends 'index.twig' %}
+
+{% block content %}
+<div class="container mt-3">
+  <h1 class="text-center mb-4">Bienvenue {{ user_profile.first_name }} !</h1>
+  <div class="d-flex flex-wrap justify-content-center">
+    <div class="col-lg-4 p-3">
+      <a href="/notifications" class="btn border bg-light p-3 w-100">
+        <p class="fs-5 fw-bold">Notifications</p>
+        <span>Voir la liste de mes notifications</span>
+      </a>
+    </div>
+    <div class="col-lg-4 p-3">
+      <a href="/dossiers" class="btn border bg-light p-3 w-100">
+        <p class="fs-5 fw-bold">Dossiers</p>
+        <span>Voir la liste de mes dossiers</span>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
