@@ -22,8 +22,8 @@ class ConnectionController
 
         $auth_url =$this->metarisc->authorizeUrl([
             'client_id'     => 'integration-platau-dev',
-            'redirect_uri' => 'http://localhost:8000/access',
-            'scope'        => 'openid profile email',
+            'redirect_uri'  => 'http://localhost:8000/access',
+            'scope'         => 'openid profile email',
         ]);
 
         $html = $template->render([

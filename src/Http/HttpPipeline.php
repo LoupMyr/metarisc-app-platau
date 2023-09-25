@@ -2,8 +2,6 @@
 
 namespace App\Http;
 
-use App\Http\Controller\NotificationController;
-use App\Http\Middleware\AuthenticationMiddleware;
 use Laminas\Di;
 use League\Route\Router;
 use Psr\Container\ContainerInterface;
@@ -14,6 +12,8 @@ use Laminas\Di\Exception\ExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use App\Http\Controller\ConnectionController;
+use App\Http\Controller\NotificationController;
+use App\Http\Middleware\AuthenticationMiddleware;
 
 final class HttpPipeline implements RequestHandlerInterface
 {
@@ -35,7 +35,6 @@ final class HttpPipeline implements RequestHandlerInterface
         $router = new Router();
 
         $injector = $this->container->get(Di\InjectorInterface::class);
-
 
         if (!($injector instanceof Di\InjectorInterface)) {
             throw new \Exception("Injector must be an instance of Di\InjectorInterface");

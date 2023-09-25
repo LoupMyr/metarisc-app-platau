@@ -2,10 +2,8 @@
 
 namespace App;
 
-use App\Http\Middleware\AuthenticationMiddleware;
 use Laminas;
 use GuzzleHttp;
-use Symfony\Component\Cache\Psr16Cache;
 use Twig\Environment;
 use Metarisc\Metarisc;
 use League\Fractal\Manager;
@@ -14,6 +12,7 @@ use Psr\SimpleCache\CacheInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Container\ContainerInterface;
 use Laminas\Di\Container\ConfigFactory;
+use Symfony\Component\Cache\Psr16Cache;
 use Psr\Http\Message\UriFactoryInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -74,8 +73,8 @@ class Container extends ServiceManager
         $container->setFactory(
             CacheInterface::class,
             function () {
+                $psr6Cache = new FilesystemAdapter('metarisc-platau', 3600, __DIR__.'/../cache');
 
-                $psr6Cache = new FilesystemAdapter('metarisc-platau', 3600 , __DIR__.'/../cache');
                 return new Psr16Cache($psr6Cache);
             }
         );
@@ -83,11 +82,11 @@ class Container extends ServiceManager
         $container->setFactory(
             Metarisc::class,
             function (ContainerInterface $container) {
-
                 $config = $container->get('config');
-                assert(is_array($config));
+                \assert(\is_array($config));
 
                 $metarisc_params = $config[Metarisc::class];
+
                 return new Metarisc($metarisc_params);
             }
         );
