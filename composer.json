@@ -6,12 +6,6 @@
             "App\\": "src/"
         }
     },
-    "authors": [
-        {
-            "name": "lucasbvn",
-            "email": "127110180+lucasbvn@users.noreply.github.com"
-        }
-    ],
     "require": {
         "twig/twig": "^3.7",
         "league/route": "^5.1",
@@ -19,7 +13,26 @@
         "laminas/laminas-diactoros": "^3.2",
         "laminas/laminas-httphandlerrunner": "^2.9",
         "guzzlehttp/guzzle": "^7.8",
-        "metarisc/metarisc-php": "dev-main"
+        "metarisc/metarisc-php": "dev-main",
+        "laminas/laminas-servicemanager": "4.0.x-dev",
+        "laminas/laminas-di": "dev-renovate/psr-container-2.x",
+        "middlewares/payload": "dev-master",
+        "spatie/fractalistic": "dev-main",
+        "http-interop/response-sender": "dev-master",
+        "vlucas/phpdotenv": "^5.5@dev",
+        "symfony/cache": "7.0.x-dev",
+        "psr/simple-cache": "^1.0",
+        "pagerfanta/twig": "*"
+    },
+    "require-dev": {
+        "kdubuc/php-cs-fixer-rules": "^1.0",
+        "vimeo/psalm": "^5.6"
+    },
+
+    "scripts": {
+        "fix-cs": "php vendor/bin/php-cs-fixer fix --config=vendor/kdubuc/php-cs-fixer-rules/php-cs-fixer.php",
+        "check-cs": "php vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no --config=vendor/kdubuc/php-cs-fixer-rules/php-cs-fixer.php",
+        "analyze": "php vendor/bin/psalm --no-cache"
     },
     "minimum-stability": "dev"
 }

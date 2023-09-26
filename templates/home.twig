@@ -16,6 +16,17 @@
         <span>Voir la liste de mes dossiers</span>
       </a>
     </div>
+
+    <h1>Notifications</h1>
+      <ul>
+        {% for notification in notifications %}
+          <li>{{ notification.title }}</li>
+          <li>{{ notification.message }}</li>
+          <li>{{ notification.date_creation }}</li>
+          <li>{{ notification.date_de_lecture }}</li>
+          <li>{{ notification.utilisateur_concerne_id }}</li>
+        {% endfor %}
+      </ul>
   </div>
 </div>
 {% endblock %}
