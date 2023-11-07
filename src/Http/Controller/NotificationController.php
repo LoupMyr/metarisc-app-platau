@@ -5,6 +5,7 @@ namespace App\Http\Controller;
 use Twig\Environment;
 use Metarisc\Metarisc;
 use Laminas\Diactoros\ResponseFactory;
+use Metarisc\Service\NotificationsAPI;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -18,12 +19,13 @@ class NotificationController
 
     public function __invoke(ServerRequestInterface $request, array $args = []) : ResponseInterface
     {
-        $template = $this->twig->load('notifications.twig');
+        $template             = $this->twig->load('notifications.twig');
+        $notificationsService = $this->metarisc->notifications;
+        \assert($notificationsService instanceof NotificationsAPI);
 
-        $notificationsPager = $this->metarisc->notifications->paginateNotifications();
+        $notificationsPager = $notificationsService->paginateNotifications();
         $notifications      = $notificationsPager->getCurrentPageResults();
-
-        $html = $template->render([
+        $html               = $template->render([
             'notifications' => $notifications,
         ]);
 

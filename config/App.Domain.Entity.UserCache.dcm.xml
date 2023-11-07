@@ -1,0 +1,13 @@
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\Entity\UserCache" table="UserCache">
+        <id name="id" type="guid" unique="true" nullable="false" />
+        <field name="email" type="string"/>
+        <field name="option1" type="boolean"/>
+        <field name="access_token" type="text"/>
+        <field name="refresh_token" type="text"/>
+    </entity>
+</doctrine-mapping>

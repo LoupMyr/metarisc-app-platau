@@ -1,32 +1,87 @@
 {% extends 'index.twig' %}
 
+{% if profil['connected'] %}
+	{% set options = 
+        "<option value='vrai' selected='selected'>Connecté</option>
+       <option value='faux'>Déconnecté</option>" 
+  %}
+{% else %}
+	{% set options = 
+        "<option value='vrai'> Connecté</option>
+        <option value='faux' selected='selected'>Déconnecté</option>" 
+    %}
+{% endif %}
 {% block content %}
-<div class="container mt-3">
-  <h1 class="text-center mb-4">Bienvenue {{ user_profile.first_name }} !</h1>
-  <div class="d-flex flex-wrap justify-content-center">
-    <div class="col-lg-4 p-3">
-      <a href="/notifications" class="btn border bg-light p-3 w-100">
-        <p class="fs-5 fw-bold">Notifications</p>
-        <span>Voir la liste de mes notifications</span>
-      </a>
-    </div>
-    <div class="col-lg-4 p-3">
-      <a href="/dossiers" class="btn border bg-light p-3 w-100">
-        <p class="fs-5 fw-bold">Dossiers</p>
-        <span>Voir la liste de mes dossiers</span>
-      </a>
-    </div>
-
-    <h1>Notifications</h1>
-      <ul>
-        {% for notification in notifications %}
-          <li>{{ notification.title }}</li>
-          <li>{{ notification.message }}</li>
-          <li>{{ notification.date_creation }}</li>
-          <li>{{ notification.date_de_lecture }}</li>
-          <li>{{ notification.utilisateur_concerne_id }}</li>
-        {% endfor %}
-      </ul>
-  </div>
-</div>
+	<nav class="navbar navbar-expand-lg bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Platau</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainavbar" aria-controls="mainavbar" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="mainavbar">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="/access">Accueil</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/notifications">Notifications</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link disabled" href="/dossiers">Dossiers</a>
+					</li>
+				</ul>
+				<form class="d-flex" action="/connection" method="POST">
+					<input type='submit' class="btn btn-outline-secondary rounded-pill" value="Se déconnecter" name="deconnexion">
+				</form>
+			</div>
+		</div>
+	</nav>
+	<div class="container mt-3 pb-3">
+		<h1 class="text-center mb-4">Bienvenue
+			{{ profil['first_name'] }}
+			!</h1>
+		<div class="d-flex flex-wrap justify-content-center">
+			<div class="col-lg-4 p-3">
+				<a href="/notifications" class="btn border bg-light p-3 w-100">
+					<p class="fs-5 fw-bold">Notifications</p>
+					<span>Voir la liste de mes notifications</span>
+				</a>
+			</div>
+			<div class="col-lg-4 p-3">
+				<a href="/dossiers" class="btn border bg-light p-3 w-100">
+					<p class="fs-5 fw-bold">Dossiers</p>
+					<span>Voir la liste de mes dossiers</span>
+				</a>
+			</div>
+		</div>
+		<div class="d-flex flex-wrap justify-content-center text-center mt-5">
+			<form action='/access' method='POST' class="border border-dark p-4">
+				<div class="py-2">
+					<label class="form-label" for='connect'>Etat:</label>
+					<select class="form-select" id="connect" name="connect">
+						{{options|raw}}
+					</select>
+				</div>
+				<div class="py-2">
+				<label class="form-label" for='email'>Email:</label>
+					<input class="form-control" type="email" name="email" value={{profil['email']}}>
+				</div>
+				<div class="py-2">
+				<label class="form-label" for='firstName'>Prenom:</label>
+					<input class="form-control" type="text" name="firstName" value={{profil['first_name']}}>
+				</div>
+				<div class="py-2">
+				<label for='lastName'>Nom:</label>
+					<input class="form-control" type="text" name="lastName" value={{profil['last_name']}}>
+				</div>
+				<div class="py-2">
+				<label class="form-label" for='something'>Something:</label>
+					<input class="form-control" type="text" name="something" placeholder="input text">
+				</div>
+				<div class="py-2">
+					<input class="btn btn-secondary" type="submit" value="Envoyer" name="btnEnvoyer"/>
+				</div>
+			</form>
+		</div>
+	</div>
 {% endblock %}

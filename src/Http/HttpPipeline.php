@@ -8,6 +8,7 @@ use Psr\Container\ContainerInterface;
 use App\Http\Controller\HomeController;
 use Psr\Http\Message\ResponseInterface;
 use App\Http\Controller\AccessController;
+use App\Http\Middleware\CachingMiddleware;
 use Laminas\Di\Exception\ExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -39,13 +40,14 @@ final class HttpPipeline implements RequestHandlerInterface
         if (!($injector instanceof Di\InjectorInterface)) {
             throw new \Exception("Injector must be an instance of Di\InjectorInterface");
         }
-
         $router->middleware($injector->create(AuthenticationMiddleware::class));
+        $router->middleware($injector->create(CachingMiddleware::class));
 
         $router->get('/', $injector->create(HomeController::class));
-        $router->get('/connection', $injector->create(ConnectionController::class));
         $router->get('/access', $injector->create(AccessController::class));
-
+        $router->post('/access', $injector->create(AccessController::class));
+        $router->get('/connection', $injector->create(ConnectionController::class));
+        $router->post('/connection', $injector->create(ConnectionController::class));
         $router->get('/notifications', $injector->create(NotificationController::class));
 
         return $router->dispatch($request);

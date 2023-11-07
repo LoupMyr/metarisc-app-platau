@@ -22,7 +22,12 @@
         "vlucas/phpdotenv": "^5.5@dev",
         "symfony/cache": "7.0.x-dev",
         "psr/simple-cache": "^1.0",
-        "pagerfanta/twig": "*"
+        "pagerfanta/twig": "*",
+        "doctrine/orm": "^2.16",
+        "doctrine/dbal": "^3.6",
+        "doctrine/migrations": "^3.6",
+        "beberlei/assert": "^3.3.2",
+        "ramsey/uuid": "^4.7"
     },
     "require-dev": {
         "kdubuc/php-cs-fixer-rules": "^1.0",
@@ -32,7 +37,11 @@
     "scripts": {
         "fix-cs": "php vendor/bin/php-cs-fixer fix --config=vendor/kdubuc/php-cs-fixer-rules/php-cs-fixer.php",
         "check-cs": "php vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no --config=vendor/kdubuc/php-cs-fixer-rules/php-cs-fixer.php",
-        "analyze": "php vendor/bin/psalm --no-cache"
+        "analyze": "php vendor/bin/psalm --no-cache",
+        "diff": "php vendor/bin/doctrine-migrations diff",
+        "migrate": "php vendor/bin/doctrine-migrations migrate --no-interaction",
+        "generate": "php vendor/bin/doctrine-migrations generate --no-interaction",
+        "start": "php -S localhost:8000 public/index.php"
     },
     "minimum-stability": "dev"
 }

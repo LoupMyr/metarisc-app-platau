@@ -4,9 +4,14 @@ namespace App;
 
 use Laminas;
 use GuzzleHttp;
+use Assert\Assertion;
 use Twig\Environment;
 use Metarisc\Metarisc;
 use League\Fractal\Manager;
+use App\Service\SessionService;
+use Doctrine\ORM\Configuration;
+use Doctrine\ORM\EntityManager;
+use Doctrine\DBAL\DriverManager;
 use Twig\Loader\FilesystemLoader;
 use Psr\SimpleCache\CacheInterface;
 use Psr\Http\Client\ClientInterface;
@@ -86,8 +91,41 @@ class Container extends ServiceManager
                 \assert(\is_array($config));
 
                 $metarisc_params = $config[Metarisc::class];
+                Assertion::isArray($metarisc_params);
+                $metarisc = new Metarisc($metarisc_params);
 
-                return new Metarisc($metarisc_params);
+                $cache = $container->get(CacheInterface::class);
+                \assert($cache instanceof CacheInterface);
+
+                $metarisc->getClient()->setTokenPersistence($cache);
+
+                return $metarisc;
+            }
+        );
+
+        $container->setFactory(
+            EntityManager::class,
+            function (ContainerInterface $container) {
+                $config    = $container->get('config');
+                Assertion::isArray($config);
+                /** @var array{charset?:string} $em_conn */
+                $em_conn   = $config['em_conn'];
+
+                $em_config = $config['em_config'];
+                Assertion::isInstanceOf($em_config, Configuration::class);
+                $conn      = DriverManager::getConnection($em_conn, $em_config);
+
+                return new EntityManager(
+                    $conn,
+                    $em_config
+                );
+            }
+        );
+
+        $container->setFactory(
+            SessionService::class,
+            function () {
+                return new SessionService();
             }
         );
 

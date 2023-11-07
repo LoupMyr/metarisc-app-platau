@@ -1,14 +1,24 @@
 {% extends 'index.twig' %}
 
 {% block content %}
-    <h1>Notifications</h1>
+    <h1 class="text-center">Notifications</h1>
+    <br><br>
     <ul>
         {% for notification in notifications %}
-            <li>{{ notification.title }}</li>
-            <li>{{ notification.message }}</li>
-            <li>{{ notification.date_creation }}</li>
-            <li>{{ notification.date_de_lecture }}</li>
-            <li>{{ notification.utilisateur_concerne_id }}</li>
+            <li>To: {{ notification.utilisateur_concerne_id }}</li>
+            <li>{{ notification.date_creation|date('Y-m-d') }}</li>
+            {% if notification.date_de_lecture is empty or notification.date_de_lecture is null %}
+                <li>Non lu</li>
+            {% else %}
+                <li>{{ notification.date_de_lecture }}</li>
+            {% endif %}
+            <li class="text-primary">{{ notification.title }}</li>
+            {% set msg = notification.message %}
+            {% if notification.message|length > 75 %}
+                {% set msg = notification.message|slice(0, 75)~'...' %}
+            {% endif %}
+            <li>{{ msg }}</li>
+            <br>
         {% endfor %}
     </ul>
 {% endblock %}
