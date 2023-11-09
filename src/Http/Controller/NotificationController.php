@@ -2,8 +2,10 @@
 
 namespace App\Http\Controller;
 
+use Assert\Assertion;
 use Twig\Environment;
 use Metarisc\Metarisc;
+use Metarisc\Model\Notification;
 use Laminas\Diactoros\ResponseFactory;
 use Metarisc\Service\NotificationsAPI;
 use Psr\Http\Message\ResponseInterface;
@@ -24,7 +26,13 @@ class NotificationController
         \assert($notificationsService instanceof NotificationsAPI);
 
         $notificationsPager = $notificationsService->paginateNotifications();
-        $notifications      = $notificationsPager->getCurrentPageResults();
+        $notifications        = $notificationsPager->getCurrentPageResults();
+        // $notifications      = [];
+        // foreach ($notifsArray as $elt) {
+        //     Assertion::isArray($elt);
+        //     $notif           = Notification::unserialize($elt);
+        //     $notifications[] = $notif;
+        // }
         $html               = $template->render([
             'notifications' => $notifications,
         ]);

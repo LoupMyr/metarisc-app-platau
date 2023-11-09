@@ -2,8 +2,6 @@
 
 namespace App\Service;
 
-use Psr\SimpleCache\CacheInterface;
-
 class SessionService
 {
     public function __construct()
@@ -24,11 +22,9 @@ class SessionService
         session_start();
     }
 
-    public function destroySession(CacheInterface $cache) : void
+    public function destroySession() : void
     {
         session_destroy();
-        unset($_COOKIE);
-        $cache->clear();
     }
 
     public function isConnected() : bool
@@ -43,7 +39,7 @@ class SessionService
 
     public function setAllCookies(string $access, string $email) : void
     {
-        setcookie('email', $email, secure: true, httponly: true);
-        setcookie('access_token', $access, secure: true, httponly: true);
+        setcookie('email', $email, 0, '/', secure: true, httponly: true);
+        setcookie('access_token', $access, 0, '/', secure: true, httponly: true);
     }
 }

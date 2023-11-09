@@ -28,25 +28,33 @@
 			</div>
 		</div>
 	</nav>
-	<h1 class="text-center">Notifications</h1>
+	<h1 class="text-center">Evenements</h1>
 	<br><br>
+
+	<div class="container mt-3 pb-3">
+		<div>
+			<form action="/evenements" method="POST">
+				<div class="input-group">
+					<input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" required="required" name="searchTitle" aria-describedby="search-addon"/>
+					<button name="btnSearchTitre" type="submit" class="btn btn-outline-primary">Rechercher</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<br><br>
+
+	<hr class="hr"/>
 	<ul>
-		{% for notification in notifications %}
-			<li>To:
-				{{ notification.utilisateur_concerne_id }}</li>
-			<li>{{ notification.date_creation|date('Y-m-d') }}</li>
-			{% if notification.date_de_lecture is empty or notification.date_de_lecture is null %}
-				<li>Non lu</li>
-			{% else %}
-				<li>{{ notification.date_de_lecture }}</li>
-			{% endif %}
-			<li class="text-primary">{{ notification.title }}</li>
-			{% set msg = notification.message %}
-			{% if notification.message|length > 75 %}
-				{% set msg = notification.message|slice(0, 75)~'...' %}
-			{% endif %}
-			<li>{{ msg }}</li>
-			<br>
+		{% for evenement in evenements %}
+			<li class='text-primary'>{{ evenement.title }}</li>
+			<li>{{ evenement.type }}</li>
+			<li>{{ evenement.description }}</li>
+			<li>
+				{{ date_debut|date('Y/m/d H:i') }}
+				-
+				{{ date_fin|date('Y/m/d H:i') }}
+			</li>
+			<hr class="hr"/>
 		{% endfor %}
 	</ul>
 {% endblock %}

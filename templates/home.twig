@@ -24,7 +24,10 @@
 						<a class="nav-link active" aria-current="page" href="/access">Accueil</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/notifications">Notifications</a>
+						<a class="nav-link active" href="/notifications">Notifications</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="/evenements">Evenements</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link disabled" href="/dossiers">Dossiers</a>
@@ -53,6 +56,12 @@
 					<span>Voir la liste de mes dossiers</span>
 				</a>
 			</div>
+			<div class="col-lg-4 p-3">
+				<a href="/evenements" class="btn border bg-light p-3 w-100">
+					<p class="fs-5 fw-bold">Evenements</p>
+					<span>Voir la liste des evenements</span>
+				</a>
+			</div>
 		</div>
 		<div class="d-flex flex-wrap justify-content-center text-center mt-5">
 			<form action='/access' method='POST' class="border border-dark p-4">
@@ -64,19 +73,15 @@
 				</div>
 				<div class="py-2">
 				<label class="form-label" for='email'>Email:</label>
-					<input class="form-control" type="email" name="email" value={{profil['email']}}>
+					<input disabled class="form-control" type="email" name="email" id="email" value={{profil['email']}}>
 				</div>
 				<div class="py-2">
 				<label class="form-label" for='firstName'>Prenom:</label>
-					<input class="form-control" type="text" name="firstName" value={{profil['first_name']}}>
+					<input class="form-control" type="text" name="firstName" id="firstName" value={{profil['first_name']}}>
 				</div>
 				<div class="py-2">
 				<label for='lastName'>Nom:</label>
-					<input class="form-control" type="text" name="lastName" value={{profil['last_name']}}>
-				</div>
-				<div class="py-2">
-				<label class="form-label" for='something'>Something:</label>
-					<input class="form-control" type="text" name="something" placeholder="input text">
+					<input class="form-control" type="text" name="lastName" id="lastName" value={{profil['last_name']}}>
 				</div>
 				<div class="py-2">
 					<input class="btn btn-secondary" type="submit" value="Envoyer" name="btnEnvoyer"/>

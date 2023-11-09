@@ -9,6 +9,7 @@ use App\Http\Controller\HomeController;
 use Psr\Http\Message\ResponseInterface;
 use App\Http\Controller\AccessController;
 use App\Http\Middleware\CachingMiddleware;
+use App\Http\Controller\EvenementController;
 use Laminas\Di\Exception\ExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -49,6 +50,8 @@ final class HttpPipeline implements RequestHandlerInterface
         $router->get('/connection', $injector->create(ConnectionController::class));
         $router->post('/connection', $injector->create(ConnectionController::class));
         $router->get('/notifications', $injector->create(NotificationController::class));
+        $router->get('/evenements', $injector->create(EvenementController::class));
+        $router->post('/evenements', $injector->create(EvenementController::class));
 
         return $router->dispatch($request);
     }

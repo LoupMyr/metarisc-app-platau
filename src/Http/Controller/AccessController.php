@@ -31,7 +31,7 @@ class AccessController
         $template        = $this->twig->load('home.twig');
 
         // SI LA REQUETE EST "GET" ALORS ON AUTHENTICATE AVEC LE CODE DANS L'URL ET ON ECRIT L'ACCESS TOKEN DANS LE CACHE
-        if ('GET' == $request->getMethod()) {
+        if ('GET' == $request->getMethod() && isset($_GET['code'])) {
             $code = $_GET['code'];
             $this->metarisc->getClient()->authenticate('oauth2:authorization_code', [
                 'code'         => $code,
@@ -58,16 +58,13 @@ class AccessController
             if (isset($body) && !empty($body)) {
                 if (isset($body['btnEnvoyer'])) {
                     $bool = true;
-                    // ON REGARDE SI "connect" DU BODY ($_POST) EST "faux" ou "vrai"
+                    // ON REGARDE SI "connect" DU BODY ($_POST) EST "faux"
                     if ('faux' == $body['connect']) {
                         $bool = false;
                     }
                     // ON MET A JOUR LE "UserCache" SI LA VALEUR ACTUELLE DE "option1" EST != DE CELLE SAISIE DANS LE FORMULAIRE
                     if ($userCache->getOption1() != $bool) {
                         try {
-                            $emailInput = $body['email'];
-                            Assertion::string($emailInput);
-                            $userCache->setEmail($emailInput);
                             $userCache->setOption1($bool);
                             $this->em->persist($userCache);
                             $this->em->flush();
