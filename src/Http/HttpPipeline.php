@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Controller\OrganisationController;
 use Laminas\Di;
 use League\Route\Router;
 use Psr\Container\ContainerInterface;
@@ -50,6 +51,7 @@ final class HttpPipeline implements RequestHandlerInterface
         $router->get('/connection', $injector->create(ConnectionController::class));
         $router->post('/connection', $injector->create(ConnectionController::class));
         $router->get('/notifications', $injector->create(NotificationController::class));
+        $router->get('/organisation', $injector->create(OrganisationController::class));
         $router->get('/evenements', $injector->create(EvenementController::class));
         $router->post('/evenements', $injector->create(EvenementController::class));
 

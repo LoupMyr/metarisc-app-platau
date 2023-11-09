@@ -19,9 +19,6 @@
                         <a class="nav-link disabled" href="/dossiers">Dossiers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/evenements">Evenements</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link " href="/organisation">Organisation</a>
                     </li>
                 </ul>
@@ -32,24 +29,17 @@
         </div>
     </nav>
     <br><br>
-    <h1 class="text-center">Notifications</h1>
+    <h1 class="text-center">Organisation</h1>
     <br><br>
-    <ul>
-        {% for notification in notifications %}
-            <li>To: {{ notification.utilisateur_concerne_id }}</li>
-            <li>{{ notification.date_creation|date('Y-m-d') }}</li>
-            {% if notification.date_de_lecture is empty or notification.date_de_lecture is null %}
-                <li>Non lu</li>
-            {% else %}
-                <li>{{ notification.date_de_lecture }}</li>
-            {% endif %}
-            <li class="text-primary">{{ notification.title }}</li>
-            {% set msg = notification.message %}
-            {% if notification.message|length > 75 %}
-                {% set msg = notification.message|slice(0, 75)~'...' %}
-            {% endif %}
-            <li>{{ msg }}</li>
+    <img src="{{ organisation.getLogoUrl }}" alt="logo" title="{{ organisation.nom }}" class="rounded mx-auto d-block" width="200" height="200">
+    <br>
+    <div class="text-center">
+        <ul style="list-style: none">
+            <li class="text-primary">Nom: {{ organisation.nom }}</li>
+            <li>Id: {{ organisation.id }}</li>
+            <li>Type: {{ organisation.type }}</li>
+            <li>Lien: {{ organisation.getLogoUrl }}</li>
             <br>
-        {% endfor %}
-    </ul>
+        </ul>
+    </div>
 {% endblock %}

@@ -604,12 +604,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "39fe3b44dab35465dfa7c47ced7e6291698104d1"
+                "reference": "c78222e7878f0346f73c952c9c3194206aeb0879"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/39fe3b44dab35465dfa7c47ced7e6291698104d1",
-                "reference": "39fe3b44dab35465dfa7c47ced7e6291698104d1",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/c78222e7878f0346f73c952c9c3194206aeb0879",
+                "reference": "c78222e7878f0346f73c952c9c3194206aeb0879",
                 "shasum": ""
             },
             "require": {
@@ -709,7 +709,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-05T21:42:24+00:00"
+            "time": "2023-11-06T19:04:11+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -1200,12 +1200,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "f08159eb87ec2feb1aaf3a25bf138704a052edd7"
+                "reference": "0e958387874feea82c562087cfde7436df402565"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/f08159eb87ec2feb1aaf3a25bf138704a052edd7",
-                "reference": "f08159eb87ec2feb1aaf3a25bf138704a052edd7",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/0e958387874feea82c562087cfde7436df402565",
+                "reference": "0e958387874feea82c562087cfde7436df402565",
                 "shasum": ""
             },
             "require": {
@@ -1293,7 +1293,7 @@
                 "issues": "https://github.com/doctrine/orm/issues",
                 "source": "https://github.com/doctrine/orm/tree/2.17.x"
             },
-            "time": "2023-11-05T22:27:48+00:00"
+            "time": "2023-11-07T07:14:32+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -2553,7 +2553,7 @@
             ],
             "support": {
                 "issues": "https://github.com/SDIS62/metarisc-php/issues",
-                "source": "https://github.com/SDIS62/metarisc-php/tree/fix-errors"
+                "source": "https://github.com/SDIS62/metarisc-php/tree/main"
             },
             "time": "2023-09-28T09:34:41+00:00"
         },
@@ -3810,12 +3810,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "f02127ea52b6ccbb7761207d63c19cca3bf7f967"
+                "reference": "62246aed5e28621932d76208183b1bababe861cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/f02127ea52b6ccbb7761207d63c19cca3bf7f967",
-                "reference": "f02127ea52b6ccbb7761207d63c19cca3bf7f967",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/62246aed5e28621932d76208183b1bababe861cd",
+                "reference": "62246aed5e28621932d76208183b1bababe861cd",
                 "shasum": ""
             },
             "require": {
@@ -3898,7 +3898,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-10-31T17:59:56+00:00"
+            "time": "2023-11-07T10:26:03+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -5836,16 +5836,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.37.1",
+            "version": "v3.38.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "c3fe76976081ab871aa654e872da588077e19679"
+                "reference": "7e6070026e76aa09d77a47519625c86593fb8e31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/c3fe76976081ab871aa654e872da588077e19679",
-                "reference": "c3fe76976081ab871aa654e872da588077e19679",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/7e6070026e76aa09d77a47519625c86593fb8e31",
+                "reference": "7e6070026e76aa09d77a47519625c86593fb8e31",
                 "shasum": ""
             },
             "require": {
@@ -5917,7 +5917,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.37.1"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.38.0"
             },
             "funding": [
                 {
@@ -5925,7 +5925,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-10-29T20:51:23+00:00"
+            "time": "2023-11-07T08:44:54+00:00"
         },
         {
             "name": "kdubuc/php-cs-fixer-rules",
@@ -6782,12 +6782,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "0b93f32e16c7eb7094d26887f8657fe84cfd0a4f"
+                "reference": "a91571ff5df8825fcc74569d99cddc7242f479b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/0b93f32e16c7eb7094d26887f8657fe84cfd0a4f",
-                "reference": "0b93f32e16c7eb7094d26887f8657fe84cfd0a4f",
+                "url": "https://api.github.com/repos/symfony/process/zipball/a91571ff5df8825fcc74569d99cddc7242f479b7",
+                "reference": "a91571ff5df8825fcc74569d99cddc7242f479b7",
                 "shasum": ""
             },
             "require": {
@@ -6835,7 +6835,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-02T13:23:55+00:00"
+            "time": "2023-11-04T20:16:32+00:00"
         },
         {
             "name": "vimeo/psalm",
@@ -6843,12 +6843,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "7acc50eef016527965d12a2767aacc37c7aaf2da"
+                "reference": "5f0798844ecb2cf06c54af802f2ce5b7c7480178"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/7acc50eef016527965d12a2767aacc37c7aaf2da",
-                "reference": "7acc50eef016527965d12a2767aacc37c7aaf2da",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/5f0798844ecb2cf06c54af802f2ce5b7c7480178",
+                "reference": "5f0798844ecb2cf06c54af802f2ce5b7c7480178",
                 "shasum": ""
             },
             "require": {
@@ -6946,7 +6946,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2023-11-03T19:57:06+00:00"
+            "time": "2023-11-06T21:42:54+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -7023,5 +7023,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
