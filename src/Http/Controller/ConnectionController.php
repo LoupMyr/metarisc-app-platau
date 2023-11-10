@@ -27,7 +27,7 @@ class ConnectionController
             if (isset($body) && !empty($body) && isset($body['deconnexion'])) {
                 if ($this->sessionService->isConnected()) {
                     $this->cache->clear();
-                    $this->sessionService->destroySession();
+                    $this->sessionService->destroySession($this->cache);
                     foreach ($_COOKIE as $key => $value) {
                         setcookie($key, $value, time() - 3600);
                     }

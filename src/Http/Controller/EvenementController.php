@@ -49,9 +49,10 @@ class EvenementController
                     $trimInput = mb_strtolower(str_replace(' ', '', $titleInput));
                     // PARCOURS DE TOUS LES ELEMENTS DU TABLEAU
                     foreach ($evenements as $elt) {
-                        Assertion::isInstanceOf($elt, Evenement::class);
                         // TRANSFORMATION DU TITRE DE L'ELT EN UNE CHAINE DE CARACTERE COLLÉ ET EN MINUSCULE
-                        $trimTitle = mb_strtolower(str_replace(' ', '', $elt->getTitle()));
+                        $title = $elt->getTitle();
+                        Assertion::string($title);
+                        $trimTitle = mb_strtolower(str_replace(' ', '', $title));
                         // SI LE TITLE CONTIENS L'INPUT
                         if (str_contains($trimTitle, $trimInput)) {
                             // ON AJOUT L'ELT AU TABLEAU DE RESULTAT

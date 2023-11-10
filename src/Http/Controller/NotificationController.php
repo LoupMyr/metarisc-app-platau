@@ -25,7 +25,7 @@ class NotificationController
         $notificationsService = $this->metarisc->notifications;
         \assert($notificationsService instanceof NotificationsAPI);
 
-        $notificationsPager = $notificationsService->paginateNotifications();
+        $notificationsPager   = $notificationsService->paginateNotifications();
         $notifications        = $notificationsPager->getCurrentPageResults();
         // $notifications      = [];
         // foreach ($notifsArray as $elt) {
