@@ -10,16 +10,19 @@
             <div class="collapse navbar-collapse" id="mainavbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/access">Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/notifications">Notifications</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="/dossiers">Dossiers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="/organisation">Organisation</a>
+						<a class="nav-link active" aria-current="page" href="/access">Accueil</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="/notifications">Notifications</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="/evenements">Evenements</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link disabled" href="/dossiers">Dossiers</a>
+					</li>
+					<li class="nav-item">
+                        <a class="nav-link active" href="/organisation">Organisation</a>
                     </li>
                 </ul>
                 <form class="d-flex" action="/connection" method="POST">
@@ -32,7 +35,7 @@
     <h1 class="text-center">Organisation</h1>
     <br><br>
     <div class="d-flex flex-wrap justify-content-center text-center mt-5">
-        <form action='/organisation' method='GET' class="border border-dark mx-5 p-4">
+        <form action='/organisation' method='GET' class="border rounded border-dark mx-5 p-5">
                 <label class="form-label" for='connect'>Id:
                     <input class="form-control" name="idInsert" value={{ idInsert }}>
                 </label>
