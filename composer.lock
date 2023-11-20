@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c42232436b1bcab57d4c47dcbe79a84",
+    "content-hash": "5b329fd3521b62cfb954641b760705ec",
     "packages": [
         {
             "name": "beberlei/assert",
-            "version": "v3.3.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/assert.git",
-                "reference": "cb70015c04be1baee6f5f5c953703347c0ac1655"
+                "reference": "60313415c987302b158c47a2914218a8b8441828"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/assert/zipball/cb70015c04be1baee6f5f5c953703347c0ac1655",
-                "reference": "cb70015c04be1baee6f5f5c953703347c0ac1655",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/60313415c987302b158c47a2914218a8b8441828",
+                "reference": "60313415c987302b158c47a2914218a8b8441828",
                 "shasum": ""
             },
             "require": {
@@ -36,6 +36,7 @@
             "suggest": {
                 "ext-intl": "Needed to allow Assertion::count(), Assertion::isCountable(), Assertion::minCount(), and Assertion::maxCount() to operate on ResourceBundles"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -69,9 +70,9 @@
             ],
             "support": {
                 "issues": "https://github.com/beberlei/assert/issues",
-                "source": "https://github.com/beberlei/assert/tree/v3.3.2"
+                "source": "https://github.com/beberlei/assert/tree/master"
             },
-            "time": "2021-12-16T21:41:27+00:00"
+            "time": "2023-02-25T21:27:33+00:00"
         },
         {
             "name": "brick/math",
@@ -2505,12 +2506,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SDIS62/metarisc-php.git",
-                "reference": "467c8460f651aca7b2123c05e0b129b541be6de4"
+                "reference": "1164941f610ea3147bb5f6266c58ac32d8b5d278"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SDIS62/metarisc-php/zipball/467c8460f651aca7b2123c05e0b129b541be6de4",
-                "reference": "467c8460f651aca7b2123c05e0b129b541be6de4",
+                "url": "https://api.github.com/repos/SDIS62/metarisc-php/zipball/1164941f610ea3147bb5f6266c58ac32d8b5d278",
+                "reference": "1164941f610ea3147bb5f6266c58ac32d8b5d278",
                 "shasum": ""
             },
             "require": {
@@ -2554,7 +2555,7 @@
                 "issues": "https://github.com/SDIS62/metarisc-php/issues",
                 "source": "https://github.com/SDIS62/metarisc-php/tree/main"
             },
-            "time": "2023-11-19T20:34:25+00:00"
+            "time": "2023-11-20T13:23:09+00:00"
         },
         {
             "name": "middlewares/payload",

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controller;
 
+use Assert\Assertion;
 use Twig\Environment;
 use Metarisc\Metarisc;
 use Metarisc\Service\OrganisationAPI;
@@ -36,7 +37,7 @@ class OrganisationController
                 $organisationsService = $this->metarisc->organisations;
                 \assert($organisationsService instanceof OrganisationAPI);
                 $idInsert = $request->getQueryParams()['idInsert'];
-                \assert(\is_string($idInsert));
+                Assertion::string($idInsert);
                 $oneOrganisation = $organisationsService->getOrganisation($idInsert);
                 $html            = $template->render([
                     'organisation' => $oneOrganisation,

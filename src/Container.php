@@ -2,9 +2,6 @@
 
 namespace App;
 
-use App\Domain\Repository\UserCacheRepositoryInterface;
-use App\Domain\Service\UserCacheServiceInterface;
-use App\Service\UserCacheService;
 use Laminas;
 use GuzzleHttp;
 use Assert\Assertion;
@@ -15,10 +12,12 @@ use App\Service\SessionService;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\DBAL\DriverManager;
+use App\Service\UserCacheService;
 use Twig\Loader\FilesystemLoader;
 use Psr\SimpleCache\CacheInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Container\ContainerInterface;
+use App\Repository\UserCacheRepository;
 use Laminas\Di\Container\ConfigFactory;
 use Symfony\Component\Cache\Psr16Cache;
 use Psr\Http\Message\UriFactoryInterface;
@@ -27,14 +26,15 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Spatie\Fractalistic\Fractal as Fractalistic;
+use App\Domain\Service\UserCacheServiceInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use App\Repository\UserCacheRepository;
+use App\Domain\Repository\UserCacheRepositoryInterface;
 
 class Container extends ServiceManager
 {
-    public static function initWithDefaults(array $options = []): self
+    public static function initWithDefaults(array $options = []) : self
     {
         // Setup service manager
         $params = [
@@ -43,18 +43,18 @@ class Container extends ServiceManager
             ],
             'invokables' => [
                 // PSR-17 HTTP Message Factories
-                RequestFactoryInterface::class => GuzzleHttp\Psr7\HttpFactory::class,
+                RequestFactoryInterface::class       => GuzzleHttp\Psr7\HttpFactory::class,
                 ServerRequestFactoryInterface::class => GuzzleHttp\Psr7\HttpFactory::class,
-                ResponseFactoryInterface::class => GuzzleHttp\Psr7\HttpFactory::class,
-                StreamFactoryInterface::class => GuzzleHttp\Psr7\HttpFactory::class,
-                UploadedFileFactoryInterface::class => GuzzleHttp\Psr7\HttpFactory::class,
-                UriFactoryInterface::class => GuzzleHttp\Psr7\HttpFactory::class,
+                ResponseFactoryInterface::class      => GuzzleHttp\Psr7\HttpFactory::class,
+                StreamFactoryInterface::class        => GuzzleHttp\Psr7\HttpFactory::class,
+                UploadedFileFactoryInterface::class  => GuzzleHttp\Psr7\HttpFactory::class,
+                UriFactoryInterface::class           => GuzzleHttp\Psr7\HttpFactory::class,
 
                 // PSR-18 HTTP Client implementations
                 ClientInterface::class => GuzzleHttp\Client::class,
             ],
             'factories' => [
-                Laminas\Di\ConfigInterface::class => ConfigFactory::class,
+                Laminas\Di\ConfigInterface::class   => ConfigFactory::class,
                 Laminas\Di\InjectorInterface::class => Laminas\Di\Container\InjectorFactory::class,
             ],
         ];
@@ -73,7 +73,7 @@ class Container extends ServiceManager
         $container->setFactory(
             Environment::class,
             function () {
-                $loader = new FilesystemLoader(__DIR__ . '/../templates');
+                $loader = new FilesystemLoader(__DIR__.'/../templates');
 
                 return new Environment($loader);
             }
@@ -82,7 +82,8 @@ class Container extends ServiceManager
         $container->setFactory(
             CacheInterface::class,
             function () {
-                $psr6Cache = new FilesystemAdapter('metarisc-platau', 3600, __DIR__ . '/../cache');
+                $psr6Cache = new FilesystemAdapter('metarisc-platau', 3600, __DIR__.'/../cache');
+
                 return new Psr16Cache($psr6Cache);
             }
         );
@@ -136,16 +137,18 @@ class Container extends ServiceManager
             UserCacheRepositoryInterface::class,
             function (ContainerInterface $container) {
                 $em = $container->get(EntityManager::class);
-                assert($em instanceof EntityManager);
+                \assert($em instanceof EntityManager);
+
                 return new UserCacheRepository($em);
             }
         );
 
         $container->setFactory(
             UserCacheServiceInterface::class,
-            function(ContainerInterface $container){
+            function (ContainerInterface $container) {
                 $repository = $container->get(UserCacheRepositoryInterface::class);
-                assert($repository instanceof UserCacheRepository);
+                \assert($repository instanceof UserCacheRepository);
+
                 return new UserCacheService($repository);
             }
         );

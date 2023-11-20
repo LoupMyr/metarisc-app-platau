@@ -2,19 +2,18 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\EntityManager;
 use App\Domain\Entity\UserCache;
 use App\Domain\Repository\UserCacheRepositoryInterface;
-use Doctrine\ORM\EntityManager;
 
 class UserCacheRepository implements UserCacheRepositoryInterface
 {
-
     public function __construct(
         private EntityManager $entityManager
-    ){
+    ) {
     }
 
-    public function insert(UserCache $userCache): void
+    public function insert(UserCache $userCache) : void
     {
         $this->entityManager->persist(
             $userCache
@@ -22,7 +21,7 @@ class UserCacheRepository implements UserCacheRepositoryInterface
         $this->entityManager->flush();
     }
 
-    public function update(string $userCache_email, UserCache $userCache): void
+    public function update(string $userCache_email, UserCache $userCache) : void
     {
         $oldUtilisateur = $this->getByEmail($userCache_email);
         \assert($oldUtilisateur instanceof UserCache);
@@ -39,18 +38,16 @@ class UserCacheRepository implements UserCacheRepositoryInterface
         $this->entityManager->flush();
     }
 
-    public function getByEmail(string $email): UserCache|null
+    public function getByEmail(string $email) : UserCache|null
     {
-        return $this->entityManager->find(
-            UserCache::class,
-            $email
+        return $this->entityManager->getRepository(UserCache::class)->findOneBy(['email' => $email]
         );
     }
 
-    public function deleteByEmail(string $email): void
+    public function deleteByEmail(string $email) : void
     {
         $userCache = $this->getByEmail($email);
-        if(!($userCache instanceof UserCache)){
+        if (!($userCache instanceof UserCache)) {
             throw new \Exception('UserCache pas dispo');
         }
 

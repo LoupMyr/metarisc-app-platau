@@ -2,14 +2,14 @@
 
 namespace App\Http;
 
-use App\Http\Controller\EvenementController;
-use App\Http\Controller\FormMenuController;
-use App\Http\Middleware\SessionManagerMiddleware;
 use Laminas\Di;
 use League\Route\Router;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use App\Http\Controller\AccessController;
+use App\Http\Controller\LogoutController;
+use App\Http\Controller\FormMenuController;
+use App\Http\Controller\EvenementController;
 use Laminas\Di\Exception\ExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -17,7 +17,7 @@ use App\Http\Controller\ConnectionController;
 use App\Http\Controller\NotificationController;
 use App\Http\Controller\OrganisationController;
 use App\Http\Middleware\AuthenticationMiddleware;
-use App\Http\Controller\LogoutController;
+use App\Http\Middleware\SessionManagerMiddleware;
 
 final class HttpPipeline implements RequestHandlerInterface
 {
@@ -52,8 +52,7 @@ final class HttpPipeline implements RequestHandlerInterface
 
         $router
             ->get('/access', $injector->create(AccessController::class))
-            ->middleware($injector->create(SessionManagerMiddleware::class))
-            ->middleware($injector->create(AuthenticationMiddleware::class));
+            ->middleware($injector->create(SessionManagerMiddleware::class));
 
         $router
             ->get('/home', $injector->create(FormMenuController::class))
@@ -83,7 +82,6 @@ final class HttpPipeline implements RequestHandlerInterface
             ->post('/evenements', $injector->create(EvenementController::class))
             ->middleware($injector->create(SessionManagerMiddleware::class))
             ->middleware($injector->create(AuthenticationMiddleware::class));
-
 
         return $router->dispatch($request);
     }

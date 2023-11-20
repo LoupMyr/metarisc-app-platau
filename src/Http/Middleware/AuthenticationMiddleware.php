@@ -17,21 +17,20 @@ class AuthenticationMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
-        $this->metarisc->authenticate('oauth2:client_credentials', [
-            'scope' => 'openid profile email',
-        ]);
+        $this->metarisc->authenticate('oauth2:null', []);
 
-        if ('/connection' != $request->getUri()->getPath() && '/' != $request->getUri()->getPath() && !isset($request->getQueryParams()['code'])) {
+        if ('/connection' != $request->getUri()->getPath() && '/' != $request->getUri()->getPath() && '/logout' != $request->getUri()->getPath() && !isset($request->getQueryParams()['code'])) {
             try {
                 // REQUETE POUR VOIR SI LE USER EST CONNECTE
                 $response = $this->metarisc->request('GET', '/@moi', ['auth' => 'oauth']);
 
                 // VERIFICATION QUE LA RESPONSE NE SONT OK (!=200)
                 if (200 != $response->getStatusCode() || !isset($_COOKIE['access_token'])) {
-                    throw new \Exception('Action non autorisé', 401);
+                    // throw new \Exception('Action non autorisé', 401);
+                    header('Location: http://localhost:8000/');
                 }
             } catch (\Exception $e) {
-                throw new \Exception('Action non autorisé', 401);
+                header('Location: http://localhost:8000/');
             }
         }
 

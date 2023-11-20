@@ -25,5 +25,4 @@ interface UserCacheRepositoryInterface
      * Supprime un userCache grâce à son email donné.
      */
     public function deleteByEmail(string $email) : void;
-
 }

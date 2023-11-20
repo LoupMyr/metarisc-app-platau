@@ -2,31 +2,27 @@
 
 namespace App\Http\Controller;
 
-use Laminas;
 use Assert\Assertion;
 use Twig\Environment;
 use Metarisc\Metarisc;
-use App\Service\SessionService;
 use Doctrine\ORM\EntityManager;
 use App\Domain\Entity\UserCache;
 use Laminas\Diactoros\ResponseFactory;
-use Psr\SimpleCache\CacheInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-
-class FormMenuController{
-
-    public function  __construct(
+class FormMenuController
+{
+    public function __construct(
         private Environment $twig,
         private Metarisc $metarisc,
         private EntityManager $em,
-    ){
+    ) {
     }
 
     public function __invoke(ServerRequestInterface $request, array $args) : ResponseInterface
     {
-        $userCache = $this->getUserCache($_COOKIE['email'],$_COOKIE['access_token']);
+        $userCache = $this->getUserCache($_COOKIE['email'], $_COOKIE['access_token']);
 
         $body = $request->getParsedBody();
         if (isset($body) && !empty($body)) {
@@ -53,8 +49,8 @@ class FormMenuController{
         }
 
         $connected = $userCache->getOption1();
-        $profil = $this->getProfil();
-        $email = $this->getEmail();
+        $profil    = $this->getProfil();
+        $email     = $this->getEmail();
         // CREATION D'UN TABLEAU AVEC TOUTES LES VALEURES UTILES DU USER POUR TWIG
         $user = [
             'first_name' => $profil['first_name'],
@@ -64,17 +60,16 @@ class FormMenuController{
         ];
 
         $template = $this->twig->load('home.twig');
-        $html = $template->render([
+        $html     = $template->render([
             'profil'    => $user,
             'connected' => $connected,
         ]);
 
         $responseFactory = new ResponseFactory();
-        $response = $responseFactory->createResponse();
+        $response        = $responseFactory->createResponse();
         $response->getBody()->write($html);
-        
+
         return $response;
-        
     }
 
     /**
@@ -149,4 +144,3 @@ class FormMenuController{
         return $userCache;
     }
 }
-

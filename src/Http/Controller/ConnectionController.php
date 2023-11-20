@@ -5,17 +5,14 @@ namespace App\Http\Controller;
 use Laminas;
 use Twig\Environment;
 use Metarisc\Metarisc;
-use App\Service\SessionService;
-use Psr\SimpleCache\CacheInterface;
+use Metarisc\Auth\OAuth2;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Metarisc\Auth\OAuth2;
 
 class ConnectionController
 {
     public function __construct(
         private Environment $twig,
-        private Metarisc $metarisc,
     ) {
     }
 
@@ -28,10 +25,9 @@ class ConnectionController
             'scope'         => 'openid profile email',
         ]);
 
-
         // Génération de la vue HTML
         $template = $this->twig->load('connected.twig');
-        $html = $template->render([
+        $html     = $template->render([
             'link' => $auth_url,
         ]);
 

@@ -16,7 +16,7 @@ class SessionManagerMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
-        if(!$this->sessionService->isConnected()) {
+        if (!$this->sessionService->isConnected()) {
             $this->sessionService->startSecureSession();
         }
 

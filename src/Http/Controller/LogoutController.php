@@ -4,7 +4,6 @@ namespace App\Http\Controller;
 
 use Laminas;
 use Twig\Environment;
-use Metarisc\Metarisc;
 use App\Service\SessionService;
 use Psr\SimpleCache\CacheInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -29,7 +28,7 @@ class LogoutController
         }
 
         $template = $this->twig->load('logout.twig');
-        $html = $template->render();
+        $html     = $template->render();
 
         $responseFactory = new Laminas\Diactoros\ResponseFactory();
         $response        = $responseFactory->createResponse();
