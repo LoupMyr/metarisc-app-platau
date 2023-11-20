@@ -8,7 +8,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class CachingMiddleware implements MiddlewareInterface
+class SessionManagerMiddleware implements MiddlewareInterface
 {
     public function __construct(private SessionService $sessionService)
     {
@@ -16,7 +16,9 @@ class CachingMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
-        $this->sessionService->startSecureSession();
+        if(!$this->sessionService->isConnected()) {
+            $this->sessionService->startSecureSession();
+        }
 
         return $handler->handle($request);
     }

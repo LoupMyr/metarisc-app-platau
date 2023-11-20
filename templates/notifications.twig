@@ -1,4 +1,4 @@
-{% extends 'index.twig' %}
+{% extends 'layouts/index.twig' %}
 
 {% block content %}
     <nav class="navbar navbar-expand-lg bg-light">
@@ -10,7 +10,7 @@
             <div class="collapse navbar-collapse" id="mainavbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/access">Accueil</a>
+                        <a class="nav-link active" aria-current="page" href="/home">Accueil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/notifications">Notifications</a>
@@ -25,8 +25,8 @@
                         <a class="nav-link " href="/organisation">Organisation</a>
                     </li>
                 </ul>
-                <form class="d-flex" action="/connection" method="POST">
-                    <input type='submit' class="btn btn-outline-secondary rounded-pill" value="Se déconnecter" name="deconnexion">
+                <form class="d-flex" action="/logout" method="GET">
+                    <input type='submit' class="btn btn-outline-secondary rounded-pill" value="Se déconnecter">
                 </form>
             </div>
         </div>
