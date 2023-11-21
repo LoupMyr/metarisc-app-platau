@@ -57,7 +57,12 @@ final class HttpPipeline implements RequestHandlerInterface
             ->get('/home', $injector->create(FormMenuController::class))
             ->middleware($injector->create(SessionManagerMiddleware::class))
             ->middleware($injector->create(AuthenticationMiddleware::class));
-
+        
+            $router
+            ->post('/home', $injector->create(FormMenuController::class))
+            ->middleware($injector->create(SessionManagerMiddleware::class))
+            ->middleware($injector->create(AuthenticationMiddleware::class));
+        
         $router
             ->get('/logout', $injector->create(LogoutController::class))
             ->middleware($injector->create(SessionManagerMiddleware::class))

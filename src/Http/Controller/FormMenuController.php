@@ -5,8 +5,8 @@ namespace App\Http\Controller;
 use Assert\Assertion;
 use Twig\Environment;
 use Metarisc\Metarisc;
-use Doctrine\ORM\EntityManager;
 use App\Domain\Entity\UserCache;
+use App\Domain\Service\UserCacheServiceInterface;
 use Laminas\Diactoros\ResponseFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -16,13 +16,13 @@ class FormMenuController
     public function __construct(
         private Environment $twig,
         private Metarisc $metarisc,
-        private EntityManager $em,
+        private UserCacheServiceInterface $userCacheService,
     ) {
     }
 
     public function __invoke(ServerRequestInterface $request, array $args) : ResponseInterface
     {
-        $userCache = $this->getUserCache($_COOKIE['email'], $_COOKIE['access_token']);
+        $userCache = $this->userCacheService->getUserCacheByEmail($_COOKIE['email']);
 
         $body = $request->getParsedBody();
         if (isset($body) && !empty($body)) {
@@ -35,12 +35,8 @@ class FormMenuController
                 // ON MET A JOUR LE "UserCache" SI LA VALEUR ACTUELLE DE "option1" EST != DE CELLE SAISIE DANS LE FORMULAIRE
                 if ($userCache->getOption1() != $bool) {
                     try {
-                        $emailInput = $body['email'];
-                        Assertion::string($emailInput);
-                        $userCache->setEmail($emailInput);
                         $userCache->setOption1($bool);
-                        $this->em->persist($userCache);
-                        $this->em->flush();
+                        $this->userCacheService->updateUserCache($userCache->getEmail(), $userCache);
                     } catch (\Exception $e) {
                         throw new \Exception('Unexepted error while changing your presence, try again later', 500);
                     }
@@ -62,7 +58,6 @@ class FormMenuController
         $template = $this->twig->load('home.twig');
         $html     = $template->render([
             'profil'    => $user,
-            'connected' => $connected,
         ]);
 
         $responseFactory = new ResponseFactory();
@@ -115,32 +110,5 @@ class FormMenuController
         Assertion::isArray($profil);
 
         return $profil;
-    }
-
-    /**
-     * - Récupération d'un objet UserCache en fonction de l'email en paramètre.
-     * - Si il n'y a pas d'objet UserCache correspondant à l'email donnée, l'objet UserCache sera créé.
-     */
-    public function getUserCache(string $email, string $access) : UserCache
-    {
-        // ON RECUPERE LE "UserCache" AVEC L'EntityManager ET LE REPOSITORY GRACE A L'EMAIL DU CURRENT USER
-        $userCache = $this->em->getRepository(UserCache::class)->findOneBy([
-            'email' => $email,
-        ]);
-
-        try {
-            // VERIFICATION QUE LE "UserCache" RECUPERER EST OK
-            if (!isset($userCache)) {
-                $userCache = new UserCache($email, false, $access, '');
-                $this->em->persist($userCache);
-                $this->em->flush();
-            }
-        } catch (\Exception $e) {
-            print_r($e->getMessage());
-        }
-
-        Assertion::notNull($userCache);
-
-        return $userCache;
     }
 }
