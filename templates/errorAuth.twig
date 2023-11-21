@@ -1,0 +1,15 @@
+{% extends 'layouts/index.twig' %}
+
+{% use 'layouts/navbarOffline.twig' %}
+{% block content %}
+	<br><br>
+	<h1 class="text-center">Erreur</h1>
+	<br><br>
+	<div class="d-flex flex-wrap justify-content-center text-center mt-5">
+		<div class="col-12">
+			<h2>{{ error }}</h2>
+		</div>
+        <div class="d-flex flex-wrap justify-content-center text-center mt-5">
+        <a href="/" class="btn btn-secondary mb-4">Revenir à la page de connexion</a>
+    </div>
+{% endblock %}

@@ -28,7 +28,9 @@ class AccessController
 
         // Si une erreur est détectée, on traite l'information
         if (\array_key_exists('error', $query_params)) {
-            throw new \Exception('AIE');
+            header('Location: http://localhost:8000/error?error='.$query_params['error']);
+            exit;
+            // throw new \Exception($query_params['error']);
             // return $response;
         }
 

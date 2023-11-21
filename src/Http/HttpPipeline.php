@@ -14,6 +14,7 @@ use Laminas\Di\Exception\ExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use App\Http\Controller\ConnectionController;
+use App\Http\Controller\ErrorAuthController;
 use App\Http\Controller\NotificationController;
 use App\Http\Controller\OrganisationController;
 use App\Http\Middleware\AuthenticationMiddleware;
@@ -51,6 +52,10 @@ final class HttpPipeline implements RequestHandlerInterface
 
         $router
             ->get('/access', $injector->create(AccessController::class))
+            ->middleware($injector->create(SessionManagerMiddleware::class));
+
+        $router
+            ->get('/error', $injector->create(ErrorAuthController::class))
             ->middleware($injector->create(SessionManagerMiddleware::class));
 
         $router
