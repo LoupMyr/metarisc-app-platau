@@ -36,6 +36,7 @@ class AccessController
         if (!\array_key_exists('code', $query_params)) {
             // throw new \Exception("Il devrait y'avoir un code ici pour l'échanger avec un access token, bizarre ...");
             header('Location: http://localhost:8000/');
+            exit;
         }
 
         $code = $query_params['code'];

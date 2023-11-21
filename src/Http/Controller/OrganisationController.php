@@ -36,8 +36,9 @@ class OrganisationController
                 $template             = $this->twig->load('organisationsRep.twig');
                 $organisationsService = $this->metarisc->organisations;
                 \assert($organisationsService instanceof OrganisationAPI);
-                $idInsert = $request->getQueryParams()['idInsert'];
-                Assertion::string($idInsert);
+                /** @var array<string,string> $params */
+                $params = $request->getQueryParams();
+                $idInsert = $params['idInsert'];
                 $oneOrganisation = $organisationsService->getOrganisation($idInsert);
                 $html            = $template->render([
                     'organisation' => $oneOrganisation,
