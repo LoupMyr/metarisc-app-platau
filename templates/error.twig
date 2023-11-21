@@ -1,38 +1,12 @@
 {% extends 'layouts/index.twig' %}
 
+{% use 'layouts/navbar.twig' %}
 {% block content %}
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Platau</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainavbar" aria-controls="mainavbar" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="mainavbar">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/access">Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/notifications">Notifications</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="/dossiers">Dossiers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="/organisation">Organisation</a>
-                    </li>
-                </ul>
-                <form class="d-flex" action="/connection" method="POST">
-                    <input type='submit' class="btn btn-outline-secondary rounded-pill" value="Se déconnecter" name="deconnexion">
-                </form>
-            </div>
-        </div>
-    </nav>
-    <br><br>
-    <h1 class="text-center">Erreur</h1>
-    <br><br>
-    <div class="d-flex flex-wrap justify-content-center text-center mt-5">
-        <div class="col-12">
-            <h2>{{ error }}</h2>
-    </div>
-{% endblock %}
+	<br><br>
+	<h1 class="text-center">Erreur</h1>
+	<br><br>
+	<div class="d-flex flex-wrap justify-content-center text-center mt-5">
+		<div class="col-12">
+			<h2>{{ error }}</h2>
+		</div>
+	{% endblock %}
