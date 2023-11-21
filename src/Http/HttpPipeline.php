@@ -47,8 +47,7 @@ final class HttpPipeline implements RequestHandlerInterface
         // Connection route
         $router
             ->get('/', $injector->create(ConnectionController::class))
-            ->middleware($injector->create(SessionManagerMiddleware::class))
-            ->middleware($injector->create(AuthenticationMiddleware::class));
+            ->middleware($injector->create(SessionManagerMiddleware::class));
 
         $router
             ->get('/access', $injector->create(AccessController::class))
