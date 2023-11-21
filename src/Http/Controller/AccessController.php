@@ -24,10 +24,12 @@ class AccessController
 
     public function __invoke(ServerRequestInterface $request, array $args = []) : void
     {
+        /** @var array<string,string> $params */
         $query_params = $request->getQueryParams();
 
         // Si une erreur est détectée, on traite l'information
         if (\array_key_exists('error', $query_params)) {
+            Assertion::string($query_params['error']);
             header('Location: http://localhost:8000/error?error='.$query_params['error']);
             exit;
             // throw new \Exception($query_params['error']);

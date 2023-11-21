@@ -3,6 +3,7 @@
 namespace App\Http\Controller;
 
 use Laminas;
+use Assert\Assertion;
 use Twig\Environment;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -16,14 +17,15 @@ class ErrorAuthController
 
     public function __invoke(ServerRequestInterface $request, array $args) : ResponseInterface
     {
-        if(!isset($request->getQueryParams()['error'])){
+        if (!isset($request->getQueryParams()['error'])) {
             throw new \Exception('AIE', 400);
         }
         $error = $request->getQueryParams()['error'];
+        Assertion::string($error);
         // Génération de la vue HTML
         $template = $this->twig->load('errorAuth.twig');
         $html     = $template->render([
-           'error' => $error
+           'error' => $error,
         ]);
 
         // Création de la réponse HTTP
