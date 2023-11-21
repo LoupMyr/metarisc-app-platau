@@ -6,10 +6,10 @@ use Assert\Assertion;
 use Twig\Environment;
 use Metarisc\Metarisc;
 use App\Domain\Entity\UserCache;
-use App\Domain\Service\UserCacheServiceInterface;
 use Laminas\Diactoros\ResponseFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use App\Domain\Service\UserCacheServiceInterface;
 
 class FormMenuController
 {
@@ -23,6 +23,7 @@ class FormMenuController
     public function __invoke(ServerRequestInterface $request, array $args) : ResponseInterface
     {
         $userCache = $this->userCacheService->getUserCacheByEmail($_COOKIE['email']);
+        Assertion::notNull($userCache);
 
         $body = $request->getParsedBody();
         if (isset($body) && !empty($body)) {
