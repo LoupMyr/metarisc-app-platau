@@ -71,19 +71,7 @@ class AccessController
             throw new \Exception("Problème dans la récupération d'email");
         }
 
-        // On essaye de récupérer l'access token depuis le cache
-        try {
-            $tokens = $this->cache->get('metarisc-oauth2-token');
-            // Le probleme est ici
-            Assertion::isArray($tokens);
-            Assertion::string($tokens['access_token']);
-            $access_token = $tokens['access_token'];
-            if (null == $access_token) {
-                throw new \Exception("L'access token est null.");
-            }
-        } catch (\Exception $e) {
-            throw new \Exception("Impossible de recupérer l'access token");
-        }
+        $access_token = $this->metarisc->getClient()->getCredentials()['access_token'];
 
         // On controle dans notre base de données si on connait l'utilisateur
         $userCache = $this->userCacheService->getUserCacheByEmail($email_primary);

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Service\TokenPersistenceService;
+use kamermans\OAuth2\Persistence\TokenPersistenceInterface;
 use Laminas;
 use GuzzleHttp;
 use Assert\Assertion;
@@ -98,10 +100,10 @@ class Container extends ServiceManager
                 Assertion::isArray($metarisc_params);
                 $metarisc = new Metarisc($metarisc_params);
 
-                $cache = $container->get(CacheInterface::class);
-                \assert($cache instanceof CacheInterface);
+                $tokenPersistence = $container->get(TokenPersistenceInterface::class);
+                \assert($tokenPersistence instanceof TokenPersistenceService);
 
-                $metarisc->getClient()->setTokenPersistence($cache);
+                $metarisc->getClient()->setTokenPersistence($tokenPersistence);
 
                 return $metarisc;
             }
@@ -150,6 +152,17 @@ class Container extends ServiceManager
                 \assert($repository instanceof UserCacheRepository);
 
                 return new UserCacheService($repository);
+            }
+        );
+
+        $container->setFactory(
+            TokenPersistenceInterface::class,
+            function (ContainerInterface $container) {
+                $sessionService = $container->get(SessionService::class);
+                \assert($sessionService instanceof SessionService);
+                $userCacheService = $container->get(UserCacheServiceInterface::class);
+                \assert($userCacheService instanceof UserCacheService);
+                return new TokenPersistenceService($sessionService, $userCacheService);
             }
         );
 
