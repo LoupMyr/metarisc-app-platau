@@ -5,6 +5,7 @@ namespace App\Service;
 use Laminas\Session\SessionManager;
 use kamermans\OAuth2\Token\TokenInterface;
 use kamermans\OAuth2\Persistence\TokenPersistenceInterface;
+use kamermans\OAuth2\Token\Serializable;
 use kamermans\OAuth2\Token\TokenSerializer;
 
 class TokenPersistenceService implements TokenPersistenceInterface
@@ -27,6 +28,10 @@ class TokenPersistenceService implements TokenPersistenceInterface
             return null;
         }
 
+        if(!($token instanceof Serializable)) {
+            throw new \Exception("Le token ne peut pas etre unserialize. Il n'implémente pas Serializable.");
+        }
+
         $unserialize = $token->unserialize([
             'access_token'  => $access,
             'expires_at'    => $expires,
@@ -38,6 +43,10 @@ class TokenPersistenceService implements TokenPersistenceInterface
 
     public function saveToken(TokenInterface $token) : void
     {
+        if(!($token instanceof Serializable)) {
+            throw new \Exception("Le token ne peut pas etre unserialize. Il n'implémente pas Serializable.");
+        }
+        
         if (!$token->isExpired()) {
             /** @var array<string,string> $tokenSerialize */
             $tokenSerialize = $token->serialize();

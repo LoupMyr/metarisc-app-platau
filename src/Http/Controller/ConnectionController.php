@@ -2,6 +2,7 @@
 
 namespace App\Http\Controller;
 
+use App\Service\SessionService;
 use Laminas;
 use Twig\Environment;
 use Metarisc\Metarisc;
@@ -13,11 +14,16 @@ class ConnectionController
 {
     public function __construct(
         private Environment $twig,
+        private SessionService $sessionService
     ) {
     }
 
-    public function __invoke(ServerRequestInterface $request, array $args) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request, array $args): ResponseInterface
     {
+        if (!is_null($this->sessionService->getSessionCookiesToken())) {
+            header('Location: http://localhost:8000/home');
+            exit;
+        }
         // Création du lien de redirection vers Metarisc pour permettre à l'utilisateu de se connecter
         $auth_url = OAuth2::authorizeUrl([
             'client_id'     => 'integration-platau-dev',
