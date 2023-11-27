@@ -15,7 +15,7 @@
         "laminas/laminas-httphandlerrunner": "^2.9",
         "guzzlehttp/guzzle": "^7.8",
         "metarisc/metarisc-php": "dev-main",
-        "laminas/laminas-servicemanager": "4.0.x-dev",
+        "laminas/laminas-servicemanager": "^3.22.0",
         "laminas/laminas-di": "^3.13",
         "middlewares/payload": "^3.0",
         "spatie/fractalistic": "^2.9",
@@ -30,7 +30,9 @@
         "beberlei/assert": "dev-master",
         "ramsey/uuid": "^4.7",
         "symfony/var-exporter": "^6.2",
-        "symfony/string": "^6.2"
+        "symfony/string": "^6.2",
+        "middlewares/php-session": "dev-master",
+        "laminas/laminas-session": "2.17.0"
     },
     "require-dev": {
         "kdubuc/php-cs-fixer-rules": "^1.0",

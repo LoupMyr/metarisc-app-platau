@@ -4,6 +4,7 @@ namespace App\Http;
 
 use Laminas\Di;
 use League\Route\Router;
+use Middlewares\PhpSession;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use App\Http\Controller\AccessController;
@@ -48,48 +49,45 @@ final class HttpPipeline implements RequestHandlerInterface
         // Connection route
         $router
             ->get('/', $injector->create(ConnectionController::class))
-            ->middleware($injector->create(SessionManagerMiddleware::class));
-
+            ->middleware(($injector->create(SessionManagerMiddleware::class)));
         $router
             ->get('/access', $injector->create(AccessController::class))
-            ->middleware($injector->create(SessionManagerMiddleware::class));
+            ->middleware(($injector->create(SessionManagerMiddleware::class)));
 
         $router
             ->get('/error', $injector->create(ErrorAuthController::class))
-            ->middleware($injector->create(SessionManagerMiddleware::class));
-
+            ->middleware(($injector->create(SessionManagerMiddleware::class)));
         $router
             ->get('/home', $injector->create(FormMenuController::class))
-            ->middleware($injector->create(SessionManagerMiddleware::class))
+            ->middleware(($injector->create(SessionManagerMiddleware::class)))
             ->middleware($injector->create(AuthenticationMiddleware::class));
 
         $router
             ->post('/home', $injector->create(FormMenuController::class))
-            ->middleware($injector->create(SessionManagerMiddleware::class))
+            ->middleware(($injector->create(SessionManagerMiddleware::class)))
             ->middleware($injector->create(AuthenticationMiddleware::class));
 
         $router
             ->get('/logout', $injector->create(LogoutController::class))
-            ->middleware($injector->create(SessionManagerMiddleware::class))
-            ->middleware($injector->create(AuthenticationMiddleware::class));
+            ->middleware(($injector->create(SessionManagerMiddleware::class)));
 
         $router
             ->get('/notifications', $injector->create(NotificationController::class))
-            ->middleware($injector->create(SessionManagerMiddleware::class))
+            ->middleware(($injector->create(SessionManagerMiddleware::class)))
             ->middleware($injector->create(AuthenticationMiddleware::class));
         $router
             ->get('/organisation', $injector->create(OrganisationController::class))
-            ->middleware($injector->create(SessionManagerMiddleware::class))
+            ->middleware(($injector->create(SessionManagerMiddleware::class)))
             ->middleware($injector->create(AuthenticationMiddleware::class));
 
         $router
             ->get('/evenements', $injector->create(EvenementController::class))
-            ->middleware($injector->create(SessionManagerMiddleware::class))
+            ->middleware(($injector->create(SessionManagerMiddleware::class)))
             ->middleware($injector->create(AuthenticationMiddleware::class));
 
         $router
             ->post('/evenements', $injector->create(EvenementController::class))
-            ->middleware($injector->create(SessionManagerMiddleware::class))
+            ->middleware(($injector->create(SessionManagerMiddleware::class)))
             ->middleware($injector->create(AuthenticationMiddleware::class));
 
         return $router->dispatch($request);

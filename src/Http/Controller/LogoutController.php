@@ -13,20 +13,20 @@ class LogoutController
 {
     public function __construct(
         private Environment $twig,
-        private CacheInterface $cache,
-        private SessionService $sessionService
+        private Laminas\Session\SessionManager $sessionManager
     ) {
     }
 
     public function __invoke(ServerRequestInterface $request, array $args) : ResponseInterface
     {
-        if ($this->sessionService->isConnected()) {
-            $this->sessionService->destroySession($this->cache);
+        if ($this->sessionManager->sessionExists()) {
+            $this->sessionManager->getStorage()->clear();
+            $this->sessionManager->expireSessionCookie();
+            $this->sessionManager->destroy();
             foreach ($_COOKIE as $key => $value) {
                 setcookie($key, $value, time() - 3600);
             }
         }
-
         $template = $this->twig->load('logout.twig');
         $html     = $template->render();
 

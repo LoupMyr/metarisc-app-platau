@@ -2,37 +2,58 @@
 
 namespace App\Service;
 
-use App\Domain\Entity\UserCache;
-use Assert\Assertion;
 use kamermans\OAuth2\Persistence\TokenPersistenceInterface;
 use kamermans\OAuth2\Token\TokenInterface;
+use Laminas\Session\SessionManager;
 
 class TokenPersistenceService implements TokenPersistenceInterface
 {
 
 
     public function __construct(
+        private SessionService $sessionService,
+        private SessionManager $sessionManager
     )
     {
     }
 
-    public function restoreToken(TokenInterface $token)
+    public function restoreToken(TokenInterface $token): mixed
     {
-        // TODO: Implement restoreToken() method.
+
+        $access = $this->sessionManager->getStorage()->getMetadata('access_token');
+        $expires = $this->sessionManager->getStorage()->getMetadata('expires_at');
+        $refresh = $this->sessionManager->getStorage()->getMetadata('refresh_token');
+        if(!$access){
+            return null;
+        }
+
+        $unserialize = $token->unserialize([
+            'access_token' => $access,
+            'expires_at' => $expires,
+            'refresh_token' => $refresh
+        ]);
+
+        return $unserialize;
+
+
     }
 
-    public function saveToken(TokenInterface $token)
+    public function saveToken(TokenInterface $token): void
     {
-        // TODO: Implement saveToken() method.
+        if(!$token->isExpired()) {
+            $this->sessionService->setSessionCookies($token->serialize());
+        }else {
+            throw new \Exception('Token expired');
+        }
     }
 
-    public function deleteToken()
+    public function deleteToken(): void
     {
-        // TODO: Implement deleteToken() method.
+       $this->sessionManager->getStorage()->clear('access_token');
     }
 
-    public function hasToken()
+    public function hasToken(): bool
     {
-        // TODO: Implement hasToken() method.
+        return (bool)$this->sessionManager->getStorage()->getMetadata('access_token');
     }
 }

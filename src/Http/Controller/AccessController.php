@@ -16,7 +16,6 @@ class AccessController
 {
     public function __construct(
         private Metarisc $metarisc,
-        private CacheInterface $cache,
         private SessionService $sessionService,
         private UserCacheServiceInterface $userCacheService
     ) {
@@ -73,6 +72,15 @@ class AccessController
 
         $access_token = $this->metarisc->getClient()->getCredentials()['access_token'];
 
+        //On stocke dans la session de l'utilisateur son email et son access token
+        $this->sessionService->setSessionCookies([
+            'access_token' => $access_token,
+            'email' => $email_primary
+        ]);
+
+        // stocke les cookies de sessions en cookies de navigateur
+        $this->sessionService->setAllCookies();
+
         // On controle dans notre base de données si on connait l'utilisateur
         $userCache = $this->userCacheService->getUserCacheByEmail($email_primary);
         if (null === $userCache) {
@@ -85,8 +93,7 @@ class AccessController
             $this->userCacheService->updateUserCache($userCache->getEmail(), $userCacheWithNewAccessToken);
         }
 
-        // On stocke dans la session de l'utilisateur son email et son access token
-        $this->sessionService->setAllCookies($access_token, $email_primary);
+
 
         // On redirect /
         header('Location: http://localhost:8000/home');

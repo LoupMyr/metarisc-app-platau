@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Laminas\Session\SessionManager;
 use Metarisc\Metarisc;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -11,29 +12,27 @@ use Psr\Http\Server\RequestHandlerInterface;
 class AuthenticationMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private Metarisc $metarisc
-    ) {
+        private Metarisc       $metarisc,
+        private SessionManager $sessionManager
+    )
+    {
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $this->metarisc->authenticate('oauth2:null', []);
 
-        if ('/connection' != $request->getUri()->getPath() && '/' != $request->getUri()->getPath() && '/logout' != $request->getUri()->getPath() && !isset($request->getQueryParams()['code'])) {
-            try {
-                // REQUETE POUR VOIR SI LE USER EST CONNECTE
-                $response = $this->metarisc->request('GET', '/@moi', ['auth' => 'oauth']);
+        if ($this->sessionManager->sessionExists() && $this->sessionManager->getStorage()->getMetadata('access_token')) {
 
-                // VERIFICATION QUE LA RESPONSE NE SONT OK (!=200)
-                if (200 != $response->getStatusCode() || !isset($_COOKIE['access_token'])) {
-                    // throw new \Exception('Action non autorisé', 401);
-                    header('Location: http://localhost:8000/');
-                    exit;
-                }
-            } catch (\Exception $e) {
-                header('Location: http://localhost:8000/');
-                exit;
+            $rep = $this->metarisc->request('GET', '/@moi', ['auth' => 'oauth']);
+            //var_dump('ca passe l authentification');
+            if ($rep->getStatusCode() != 200) {
+                throw new \Exception('error dans le middleware, pas possible de faire la requete', 401);
             }
+        } else {
+            throw new \Exception('error dans le middleware, au niveau de la session', 401);
+            /*header('Location: http://localhost:8000/');
+            exit;*/
         }
 
         return $handler->handle($request);

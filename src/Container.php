@@ -7,6 +7,7 @@ use kamermans\OAuth2\Persistence\TokenPersistenceInterface;
 use Laminas;
 use GuzzleHttp;
 use Assert\Assertion;
+use Laminas\Session\SessionManager;
 use Twig\Environment;
 use Metarisc\Metarisc;
 use League\Fractal\Manager;
@@ -130,8 +131,10 @@ class Container extends ServiceManager
 
         $container->setFactory(
             SessionService::class,
-            function () {
-                return new SessionService();
+            function (ContainerInterface $container) {
+                $sessionsManager = $container->get(SessionManager::class);
+                assert($sessionsManager instanceof SessionManager);
+                return new SessionService($sessionsManager);
             }
         );
 
@@ -160,9 +163,16 @@ class Container extends ServiceManager
             function (ContainerInterface $container) {
                 $sessionService = $container->get(SessionService::class);
                 \assert($sessionService instanceof SessionService);
-                $userCacheService = $container->get(UserCacheServiceInterface::class);
-                \assert($userCacheService instanceof UserCacheService);
-                return new TokenPersistenceService($sessionService, $userCacheService);
+                $sessionManager = $container->get(SessionManager::class);
+                \assert($sessionManager instanceof SessionManager);
+                return new TokenPersistenceService($sessionService, $sessionManager);
+            }
+        );
+
+        $container->setFactory(
+            SessionManager::class,
+            function(){
+                return new SessionManager();
             }
         );
 
