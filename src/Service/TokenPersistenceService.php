@@ -2,58 +2,52 @@
 
 namespace App\Service;
 
-use kamermans\OAuth2\Persistence\TokenPersistenceInterface;
-use kamermans\OAuth2\Token\TokenInterface;
 use Laminas\Session\SessionManager;
+use kamermans\OAuth2\Token\TokenInterface;
+use kamermans\OAuth2\Persistence\TokenPersistenceInterface;
 
 class TokenPersistenceService implements TokenPersistenceInterface
 {
-
-
     public function __construct(
         private SessionService $sessionService,
         private SessionManager $sessionManager
-    )
-    {
+    ) {
     }
 
-    public function restoreToken(TokenInterface $token): mixed
+    public function restoreToken(TokenInterface $token) : mixed
     {
-
-        $access = $this->sessionManager->getStorage()->getMetadata('access_token');
+        $access  = $this->sessionManager->getStorage()->getMetadata('access_token');
         $expires = $this->sessionManager->getStorage()->getMetadata('expires_at');
         $refresh = $this->sessionManager->getStorage()->getMetadata('refresh_token');
-        if(!$access){
+        if (!$access) {
             return null;
         }
 
         $unserialize = $token->unserialize([
-            'access_token' => $access,
-            'expires_at' => $expires,
-            'refresh_token' => $refresh
+            'access_token'  => $access,
+            'expires_at'    => $expires,
+            'refresh_token' => $refresh,
         ]);
 
         return $unserialize;
-
-
     }
 
-    public function saveToken(TokenInterface $token): void
+    public function saveToken(TokenInterface $token) : void
     {
-        if(!$token->isExpired()) {
+        if (!$token->isExpired()) {
             $this->sessionService->setSessionCookies($token->serialize());
-        }else {
+        } else {
             throw new \Exception('Token expired');
         }
     }
 
-    public function deleteToken(): void
+    public function deleteToken() : void
     {
-       $this->sessionManager->getStorage()->clear('access_token');
+        $this->sessionManager->getStorage()->clear('access_token');
     }
 
-    public function hasToken(): bool
+    public function hasToken() : bool
     {
-        return (bool)$this->sessionManager->getStorage()->getMetadata('access_token');
+        return (bool) $this->sessionManager->getStorage()->getMetadata('access_token');
     }
 }

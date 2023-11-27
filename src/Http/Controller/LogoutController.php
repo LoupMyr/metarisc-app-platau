@@ -4,8 +4,6 @@ namespace App\Http\Controller;
 
 use Laminas;
 use Twig\Environment;
-use App\Service\SessionService;
-use Psr\SimpleCache\CacheInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 

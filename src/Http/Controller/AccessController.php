@@ -7,7 +7,6 @@ use Metarisc\Metarisc;
 use Metarisc\Model\Email;
 use App\Service\SessionService;
 use App\Domain\Entity\UserCache;
-use Psr\SimpleCache\CacheInterface;
 use Metarisc\Service\UtilisateursAPI;
 use Psr\Http\Message\ServerRequestInterface;
 use App\Domain\Service\UserCacheServiceInterface;
@@ -71,11 +70,11 @@ class AccessController
         }
 
         $access_token = $this->metarisc->getClient()->getCredentials()['access_token'];
-
-        //On stocke dans la session de l'utilisateur son email et son access token
+        Assertion::string($access_token);
+        // On stocke dans la session de l'utilisateur son email et son access token
         $this->sessionService->setSessionCookies([
             'access_token' => $access_token,
-            'email' => $email_primary
+            'email'        => $email_primary,
         ]);
 
         // stocke les cookies de sessions en cookies de navigateur
@@ -92,8 +91,6 @@ class AccessController
             $userCacheWithNewAccessToken = new UserCache($userCache->getEmail(), $userCache->getOption1(), $access_token, $userCache->getRefreshToken());
             $this->userCacheService->updateUserCache($userCache->getEmail(), $userCacheWithNewAccessToken);
         }
-
-
 
         // On redirect /
         header('Location: http://localhost:8000/home');

@@ -2,12 +2,9 @@
 
 namespace App;
 
-use App\Service\TokenPersistenceService;
-use kamermans\OAuth2\Persistence\TokenPersistenceInterface;
 use Laminas;
 use GuzzleHttp;
 use Assert\Assertion;
-use Laminas\Session\SessionManager;
 use Twig\Environment;
 use Metarisc\Metarisc;
 use League\Fractal\Manager;
@@ -17,12 +14,14 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\DBAL\DriverManager;
 use App\Service\UserCacheService;
 use Twig\Loader\FilesystemLoader;
+use Laminas\Session\SessionManager;
 use Psr\SimpleCache\CacheInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Container\ContainerInterface;
 use App\Repository\UserCacheRepository;
 use Laminas\Di\Container\ConfigFactory;
 use Symfony\Component\Cache\Psr16Cache;
+use App\Service\TokenPersistenceService;
 use Psr\Http\Message\UriFactoryInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -34,6 +33,7 @@ use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use App\Domain\Repository\UserCacheRepositoryInterface;
+use kamermans\OAuth2\Persistence\TokenPersistenceInterface;
 
 class Container extends ServiceManager
 {
@@ -133,7 +133,8 @@ class Container extends ServiceManager
             SessionService::class,
             function (ContainerInterface $container) {
                 $sessionsManager = $container->get(SessionManager::class);
-                assert($sessionsManager instanceof SessionManager);
+                \assert($sessionsManager instanceof SessionManager);
+
                 return new SessionService($sessionsManager);
             }
         );
@@ -165,13 +166,14 @@ class Container extends ServiceManager
                 \assert($sessionService instanceof SessionService);
                 $sessionManager = $container->get(SessionManager::class);
                 \assert($sessionManager instanceof SessionManager);
+
                 return new TokenPersistenceService($sessionService, $sessionManager);
             }
         );
 
         $container->setFactory(
             SessionManager::class,
-            function(){
+            function () {
                 return new SessionManager();
             }
         );
