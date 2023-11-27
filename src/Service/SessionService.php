@@ -53,6 +53,7 @@ class SessionService
     public function setSessionCookies(array $cookies) : void
     {
         $this->setSessionStorage();
+        /** @var string|integer $value */
         foreach ($cookies as $key => $value) {
             Assertion::string($key);
             $this->sessionManager->getStorage()->setMetadata($key, $value);
