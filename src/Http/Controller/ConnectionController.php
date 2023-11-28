@@ -2,11 +2,11 @@
 
 namespace App\Http\Controller;
 
-use App\Service\SessionService;
 use Laminas;
 use Twig\Environment;
 use Metarisc\Metarisc;
 use Metarisc\Auth\OAuth2;
+use App\Service\SessionService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -18,9 +18,9 @@ class ConnectionController
     ) {
     }
 
-    public function __invoke(ServerRequestInterface $request, array $args): ResponseInterface
+    public function __invoke(ServerRequestInterface $request, array $args) : ResponseInterface
     {
-        if (!is_null($this->sessionService->getSessionCookiesToken())) {
+        if (null !== $this->sessionService->getSessionCookiesToken()) {
             header('Location: http://localhost:8000/home');
             exit;
         }
