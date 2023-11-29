@@ -36,7 +36,6 @@ COPY config config
 COPY src src
 COPY templates templates
 COPY .env .env
-COPY cache cache
 
 # Insert application
 COPY boot.sh boot.sh

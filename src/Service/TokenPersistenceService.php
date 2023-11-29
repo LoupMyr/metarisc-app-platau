@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Assert\Assertion;
 use Laminas\Session\SessionManager;
 use kamermans\OAuth2\Token\Serializable;
 use kamermans\OAuth2\Token\TokenInterface;
@@ -15,7 +16,7 @@ class TokenPersistenceService implements TokenPersistenceInterface
     ) {
     }
 
-    public function restoreToken(TokenInterface $token)
+    public function restoreToken(TokenInterface $token) : TokenInterface|null
     {
         /** @var string|bool $access */
         $access  = $this->sessionManager->getStorage()->getMetadata('access_token');
@@ -36,8 +37,7 @@ class TokenPersistenceService implements TokenPersistenceInterface
             'expires_at'    => $expires,
             'refresh_token' => $refresh,
         ]);
-
-        \assert($unserialize instanceof TokenInterface);
+        Assertion::isInstanceOf($unserialize, TokenInterface::class);
 
         return $unserialize;
     }

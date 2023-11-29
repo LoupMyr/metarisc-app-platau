@@ -58,8 +58,7 @@ class AccessController
         $emails        = $utilisateursApi->paginateMoiEmails()->getCurrentPageResults();
         $email_primary = null;
         foreach ($emails as $email) {
-            Assertion::isArray($email);
-            $email = Email::unserialize($email);
+            Assertion::isInstanceOf($email, Email::class);
             if (true === $email->getIsPrimary()) {
                 $email_primary = $email->getEmail();
                 break;

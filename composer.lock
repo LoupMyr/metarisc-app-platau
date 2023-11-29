@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d74d74746b4ceb48c7832d5b52a66e8d",
+    "content-hash": "685b4e57631128c3ece915ce1f35ff17",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -2695,12 +2695,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SDIS62/metarisc-php.git",
-                "reference": "3df0b056370bf4e79845d06530bdcb351292acce"
+                "reference": "9da48aee64bb3768d10f61045f4683005cc8c139"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SDIS62/metarisc-php/zipball/3df0b056370bf4e79845d06530bdcb351292acce",
-                "reference": "3df0b056370bf4e79845d06530bdcb351292acce",
+                "url": "https://api.github.com/repos/SDIS62/metarisc-php/zipball/9da48aee64bb3768d10f61045f4683005cc8c139",
+                "reference": "9da48aee64bb3768d10f61045f4683005cc8c139",
                 "shasum": ""
             },
             "require": {
@@ -2709,7 +2709,7 @@
                 "guzzlehttp/guzzle": "^7.0",
                 "kamermans/guzzle-oauth2-subscriber": "^1.0",
                 "kevinrob/guzzle-cache-middleware": "^5.1",
-                "pagerfanta/pagerfanta": "^3.6",
+                "pagerfanta/pagerfanta": "^v4.2.0",
                 "php": "^8.0",
                 "psr/simple-cache": "^1.0|^2.0|^3.0",
                 "symfony/options-resolver": "^5.2"
@@ -2745,7 +2745,7 @@
                 "issues": "https://github.com/SDIS62/metarisc-php/issues",
                 "source": "https://github.com/SDIS62/metarisc-php/tree/main"
             },
-            "time": "2023-11-23T14:02:59+00:00"
+            "time": "2023-11-29T14:28:16+00:00"
         },
         {
             "name": "middlewares/payload",
@@ -3039,32 +3039,30 @@
         },
         {
             "name": "pagerfanta/pagerfanta",
-            "version": "3.x-dev",
+            "version": "4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BabDev/Pagerfanta.git",
-                "reference": "a07c84296e491add39d103b812129de77610c33b"
+                "reference": "26302346647d4ffbbebfd8e0bd7aea3c875ef89a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BabDev/Pagerfanta/zipball/a07c84296e491add39d103b812129de77610c33b",
-                "reference": "a07c84296e491add39d103b812129de77610c33b",
+                "url": "https://api.github.com/repos/BabDev/Pagerfanta/zipball/26302346647d4ffbbebfd8e0bd7aea3c875ef89a",
+                "reference": "26302346647d4ffbbebfd8e0bd7aea3c875ef89a",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": "^7.4 || ^8.0",
-                "symfony/deprecation-contracts": "^2.1 || ^3.0",
-                "symfony/polyfill-php80": "^1.15"
+                "php": "^8.1"
             },
             "conflict": {
                 "doctrine/collections": "<1.8",
-                "doctrine/dbal": "<3.1",
-                "doctrine/mongodb-odm": "<2.2.2",
-                "doctrine/orm": "<2.8",
-                "doctrine/phpcr-odm": "<1.5",
-                "ruflin/elastica": "<6.0",
-                "solarium/solarium": "<5.0",
+                "doctrine/dbal": "<3.5",
+                "doctrine/mongodb-odm": "<2.4",
+                "doctrine/orm": "<2.14",
+                "doctrine/phpcr-odm": "<1.7",
+                "ruflin/elastica": "<7.3",
+                "solarium/solarium": "<6.2",
                 "twig/twig": "<2.13"
             },
             "replace": {
@@ -3079,27 +3077,27 @@
                 "pagerfanta/twig": "self.version"
             },
             "require-dev": {
-                "dg/bypass-finals": "^1.3",
-                "doctrine/cache": "^1.11 || ^2.0",
+                "dg/bypass-finals": "^1.5.1",
                 "doctrine/collections": "^1.8 || ^2.0",
-                "doctrine/dbal": "^3.1",
-                "doctrine/mongodb-odm": "^2.2.2",
-                "doctrine/orm": "^2.8",
-                "doctrine/phpcr-odm": "^1.5",
-                "jackalope/jackalope-doctrine-dbal": "^1.7.4",
-                "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "1.9.14",
-                "phpstan/phpstan-phpunit": "1.3.3",
-                "phpunit/phpunit": "9.6.7 || 10.1.0",
-                "rector/rector": "0.15.12",
-                "ruflin/elastica": "^6.0 || ^7.0",
-                "solarium/solarium": "^5.0 || ^6.0",
-                "symfony/cache": "^5.4 || ^6.0",
+                "doctrine/dbal": "^3.5",
+                "doctrine/mongodb-odm": "^2.4",
+                "doctrine/orm": "^2.14",
+                "doctrine/phpcr-odm": "^1.7",
+                "jackalope/jackalope-doctrine-dbal": "^1.9",
+                "phpstan/extension-installer": "^1.3.1",
+                "phpstan/phpstan": "1.10.35",
+                "phpstan/phpstan-phpunit": "1.3.14",
+                "phpunit/phpunit": "10.3.5",
+                "rector/rector": "0.18.4",
+                "ruflin/elastica": "^7.3",
+                "solarium/solarium": "^6.2",
+                "symfony/cache": "^5.4 || ^6.3 || ^7.0",
                 "twig/twig": "^2.13 || ^3.0"
             },
             "suggest": {
                 "twig/twig": "To integrate Pagerfanta with Twig"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -3130,7 +3128,7 @@
             ],
             "support": {
                 "issues": "https://github.com/BabDev/Pagerfanta/issues",
-                "source": "https://github.com/BabDev/Pagerfanta/tree/3.x"
+                "source": "https://github.com/BabDev/Pagerfanta/tree/4.x"
             },
             "funding": [
                 {
@@ -3138,7 +3136,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-04-15T16:39:36+00:00"
+            "time": "2023-09-28T23:09:03+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -3835,12 +3833,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "6730652e95b13afc3e026ce946f777ec361d9a49"
+                "reference": "63e4f7e924cd81b655c39fe6c1499fece7f48333"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/6730652e95b13afc3e026ce946f777ec361d9a49",
-                "reference": "6730652e95b13afc3e026ce946f777ec361d9a49",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/63e4f7e924cd81b655c39fe6c1499fece7f48333",
+                "reference": "63e4f7e924cd81b655c39fe6c1499fece7f48333",
                 "shasum": ""
             },
             "require": {
@@ -3920,7 +3918,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-20T22:02:35+00:00"
+            "time": "2023-11-27T21:59:44+00:00"
         },
         {
             "name": "spatie/fractalistic",
@@ -5113,12 +5111,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "6c4c7ed2bb3101b956cbaa6f7150e50776bc8b51"
+                "reference": "b45fcf399ea9c3af543a92edf7172ba21174d809"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/6c4c7ed2bb3101b956cbaa6f7150e50776bc8b51",
-                "reference": "6c4c7ed2bb3101b956cbaa6f7150e50776bc8b51",
+                "url": "https://api.github.com/repos/symfony/string/zipball/b45fcf399ea9c3af543a92edf7172ba21174d809",
+                "reference": "b45fcf399ea9c3af543a92edf7172ba21174d809",
                 "shasum": ""
             },
             "require": {
@@ -5191,7 +5189,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-20T16:41:16+00:00"
+            "time": "2023-11-28T20:41:49+00:00"
         },
         {
             "name": "symfony/var-exporter",
@@ -5199,12 +5197,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "ca57ddc8a6441230aee15ea25678c403cea0c3e3"
+                "reference": "d6081c0316f0f5921f2010d1766925005a82ea3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/ca57ddc8a6441230aee15ea25678c403cea0c3e3",
-                "reference": "ca57ddc8a6441230aee15ea25678c403cea0c3e3",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/d6081c0316f0f5921f2010d1766925005a82ea3b",
+                "reference": "d6081c0316f0f5921f2010d1766925005a82ea3b",
                 "shasum": ""
             },
             "require": {
@@ -5266,7 +5264,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-20T16:41:16+00:00"
+            "time": "2023-11-28T20:41:49+00:00"
         },
         {
             "name": "twig/twig",
@@ -6191,12 +6189,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "e453389866395e57146efe12077458c2d906687d"
+                "reference": "2a5e81f7caae572f096f5cc83d0ef75687127e1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/e453389866395e57146efe12077458c2d906687d",
-                "reference": "e453389866395e57146efe12077458c2d906687d",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/2a5e81f7caae572f096f5cc83d0ef75687127e1c",
+                "reference": "2a5e81f7caae572f096f5cc83d0ef75687127e1c",
                 "shasum": ""
             },
             "require": {
@@ -6239,7 +6237,7 @@
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
                 "source": "https://github.com/nikic/PHP-Parser/tree/4.x"
             },
-            "time": "2023-11-12T15:49:53+00:00"
+            "time": "2023-11-28T19:10:38+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -6523,12 +6521,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/diff.git",
-                "reference": "a424735c141e153b2e5337a210c9d2f36bbfeb32"
+                "reference": "09370d69519f66f74a78ca6bb57ad65609f0e756"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/a424735c141e153b2e5337a210c9d2f36bbfeb32",
-                "reference": "a424735c141e153b2e5337a210c9d2f36bbfeb32",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/09370d69519f66f74a78ca6bb57ad65609f0e756",
+                "reference": "09370d69519f66f74a78ca6bb57ad65609f0e756",
                 "shasum": ""
             },
             "require": {
@@ -6583,7 +6581,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-11-23T06:21:27+00:00"
+            "time": "2023-11-27T14:37:51+00:00"
         },
         {
             "name": "spatie/array-to-xml",
@@ -7256,5 +7254,5 @@
         "php": "^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
