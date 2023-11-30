@@ -16,6 +16,7 @@ class TokenPersistenceService implements TokenPersistenceInterface
     ) {
     }
 
+    /** @psalm-suppress InvalidNullableReturnType */
     public function restoreToken(TokenInterface $token) : TokenInterface|null
     {
         /** @var string|bool $access */
@@ -25,6 +26,7 @@ class TokenPersistenceService implements TokenPersistenceInterface
         /** @var string|bool $refresh */
         $refresh = $this->sessionManager->getStorage()->getMetadata('refresh_token');
         if (!$access) {
+            /** @psalm-suppress NullableReturnStatement */
             return null;
         }
 
