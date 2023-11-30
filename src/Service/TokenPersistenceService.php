@@ -16,6 +16,10 @@ class TokenPersistenceService implements TokenPersistenceInterface
     ) {
     }
 
+    /**
+     * En attente de la résolution du ticket URL.
+     * https://github.com/kamermans/guzzle-oauth2-subscriber/issues/56.
+     */
     /** @psalm-suppress InvalidNullableReturnType */
     public function restoreToken(TokenInterface $token) : TokenInterface|null
     {
