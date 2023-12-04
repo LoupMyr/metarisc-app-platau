@@ -6,6 +6,7 @@ use Assert\Assertion;
 use Twig\Environment;
 use Metarisc\Metarisc;
 use App\Domain\Entity\UserCache;
+use Laminas\Session\SessionManager;
 use Laminas\Diactoros\ResponseFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -17,12 +18,15 @@ class FormMenuController
         private Environment $twig,
         private Metarisc $metarisc,
         private UserCacheServiceInterface $userCacheService,
+        private SessionManager $sessionManager
     ) {
     }
 
     public function __invoke(ServerRequestInterface $request, array $args) : ResponseInterface
     {
-        $userCache = $this->userCacheService->getUserCacheByEmail($_COOKIE['email']);
+        $email = $this->sessionManager->getStorage()->getMetadata('email');
+        Assertion::string($email);
+        $userCache = $this->userCacheService->getUserCacheByEmail($email);
         Assertion::notNull($userCache);
 
         $body = $request->getParsedBody();
@@ -47,7 +51,7 @@ class FormMenuController
 
         $connected = $userCache->getOption1();
         $profil    = $this->getProfil();
-        $email     = $this->getEmail();
+
         // CREATION D'UN TABLEAU AVEC TOUTES LES VALEURES UTILES DU USER POUR TWIG
         $user = [
             'first_name' => $profil['first_name'],
@@ -69,36 +73,19 @@ class FormMenuController
     }
 
     /**
-     * Récupération de l'email de l'utilisateur actuellement connecté.
-     **/
-    public function getEmail() : string
-    {
-        // REQUETE POUR L'EMAIL CURRENT USER
-        $email_json = $this->metarisc->request('GET', '/@moi/emails', ['auth' => 'oauth']);
-        // VERIFICATION QUE LES RESPONSES SONT OK (==200)
-        if (200 == $email_json->getStatusCode()) {
-            $email_decode = json_decode($email_json->getBody()->__toString(), true);
-            Assertion::isArray($email_decode);
-            $email_data = $email_decode['data'];
-            Assertion::isArray($email_data);
-            $email_0 = $email_data[0];
-            Assertion::isArray($email_0);
-            $email = $email_0['email'];
-        } else {
-            throw new \Exception('Une erreur est survenue lors de la récupération de l\'email');
-        }
-        Assertion::notNull($email);
-        Assertion::string($email);
-
-        return $email;
-    }
-
-    /**
      * Récupération du profil de l'utilisateur actuellement connecté.
      */
     public function getProfil() : array
     {
         // REQUETE POUR L'EMAIL CURRENT USER
+        // On pourra remplacer par
+
+        /*$utilisateursAPI = $this->metarisc->utilisateurs;
+        Assertion::isInstanceOf($utilisateursAPI, UtilisateursAPI::class);
+        $profil = $utilisateursAPI->getUtilisateursMoi();
+        Assertion::isInstanceOf($profil, Utilisateur::class);
+        Assertion::notNull($profil);*/
+
         $profil_json = $this->metarisc->request('GET', '/@moi', ['auth' => 'oauth']);
         // VERIFICATION QUE LES RESPONSES SONT OK (==200)
         if (200 == $profil_json->getStatusCode()) {

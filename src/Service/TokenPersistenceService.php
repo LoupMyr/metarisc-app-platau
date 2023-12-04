@@ -30,7 +30,7 @@ class TokenPersistenceService implements TokenPersistenceInterface
         /** @var string|bool $refresh */
         $refresh = $this->sessionManager->getStorage()->getMetadata('refresh_token');
         if (!$access) {
-            /** @psalm-suppress NullableReturnStatement */
+            /* @psalm-suppress NullableReturnStatement */
             return null;
         }
 

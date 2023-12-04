@@ -7,6 +7,7 @@ use Metarisc\Metarisc;
 use Metarisc\Model\Email;
 use App\Service\SessionService;
 use App\Domain\Entity\UserCache;
+use Laminas\Session\SessionManager;
 use Metarisc\Service\UtilisateursAPI;
 use Psr\Http\Message\ServerRequestInterface;
 use App\Domain\Service\UserCacheServiceInterface;
@@ -16,7 +17,8 @@ class AccessController
     public function __construct(
         private Metarisc $metarisc,
         private SessionService $sessionService,
-        private UserCacheServiceInterface $userCacheService
+        private UserCacheServiceInterface $userCacheService,
+        private SessionManager $sessionManager
     ) {
     }
 
@@ -47,17 +49,18 @@ class AccessController
         // On échange, grace au SDK Metarisc, le code avec un access token
         // Si il y a un cache dans le container, l'access token sera stocké dedans
         $this->metarisc->authenticate('oauth2:authorization_code', [
-            'code'         => $code,
-            'scope'        => 'openid profile email',
-            'redirect_uri' => 'http://localhost:8000/access',
+            'code'                            => $code,
+            'scope'                           => 'openid profile email',
+            'redirect_uri'                    => 'http://localhost:8000/access',
+            'enable_refresh_token_grant_type' => true,
         ]);
 
         // Récupération de l'email de l'utilisateur
         $utilisateursApi = $this->metarisc->utilisateurs;
         \assert($utilisateursApi instanceof UtilisateursAPI);
-        $emails        = $utilisateursApi->paginateMoiEmails()->getCurrentPageResults();
+        $generator     = $utilisateursApi->paginateMoiEmails()->autoPagingIterator();
         $email_primary = null;
-        foreach ($emails as $email) {
+        foreach ($generator as $email) {
             Assertion::isInstanceOf($email, Email::class);
             if (true === $email->getIsPrimary()) {
                 $email_primary = $email->getEmail();
@@ -68,26 +71,27 @@ class AccessController
             throw new \Exception("Problème dans la récupération d'email");
         }
 
-        $access_token = $this->metarisc->getClient()->getCredentials()['access_token'];
+        $access_token  = $this->sessionManager->getStorage()->getMetadata('access_token');
+        $refresh_token = $this->sessionManager->getStorage()->getMetadata('refresh_token');
         Assertion::string($access_token);
+        Assertion::string($refresh_token);
         // On stocke dans la session de l'utilisateur son email et son access token
         $this->sessionService->setSessionCookies([
-            'access_token' => $access_token,
             'email'        => $email_primary,
         ]);
 
         // stocke les cookies de sessions en cookies de navigateur
-        $this->sessionService->setAllCookies();
+        // $this->sessionService->setAllCookies();
 
         // On controle dans notre base de données si on connait l'utilisateur
         $userCache = $this->userCacheService->getUserCacheByEmail($email_primary);
         if (null === $userCache) {
             // Si on connait pas l'utilisateur, on l'inscrit dans la base
-            $userCache = new UserCache($email_primary, false, $access_token, '');
+            $userCache = new UserCache($email_primary, false, $access_token, $refresh_token);
             $this->userCacheService->addUserCache($userCache);
         } else {
             // Si on le connait, on met à jour son access token
-            $userCacheWithNewAccessToken = new UserCache($userCache->getEmail(), $userCache->getOption1(), $access_token, $userCache->getRefreshToken());
+            $userCacheWithNewAccessToken = new UserCache($userCache->getEmail(), $userCache->getOption1(), $access_token, $refresh_token);
             $this->userCacheService->updateUserCache($userCache->getEmail(), $userCacheWithNewAccessToken);
         }
 

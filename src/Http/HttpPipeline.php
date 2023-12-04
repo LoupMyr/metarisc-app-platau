@@ -5,13 +5,16 @@ namespace App\Http;
 use Laminas\Di;
 use League\Route\Router;
 use Psr\Container\ContainerInterface;
+use League\Route\Strategy\JsonStrategy;
 use Psr\Http\Message\ResponseInterface;
 use App\Http\Controller\AccessController;
 use App\Http\Controller\LogoutController;
 use App\Http\Controller\FormMenuController;
+use App\Http\Middleware\NotFoundMiddleware;
 use App\Http\Controller\ErrorAuthController;
 use App\Http\Controller\EvenementController;
 use Laminas\Di\Exception\ExceptionInterface;
+use League\Route\Strategy\StrategyInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use App\Http\Controller\ConnectionController;
@@ -45,10 +48,16 @@ final class HttpPipeline implements RequestHandlerInterface
             throw new \Exception("Injector must be an instance of Di\InjectorInterface");
         }
 
+        /*$strategy = $injector->create(JsonStrategy::class);
+        \assert($strategy instanceof StrategyInterface);
+        $router->setStrategy($strategy);*/
+        $router->middleware($injector->create(NotFoundMiddleware::class));
+
         // Connection route
         $router
             ->get('/', $injector->create(ConnectionController::class))
             ->middleware($injector->create(SessionManagerMiddleware::class));
+
         $router
             ->get('/access', $injector->create(AccessController::class))
             ->middleware($injector->create(SessionManagerMiddleware::class));
@@ -56,6 +65,7 @@ final class HttpPipeline implements RequestHandlerInterface
         $router
             ->get('/error', $injector->create(ErrorAuthController::class))
             ->middleware($injector->create(SessionManagerMiddleware::class));
+
         $router
             ->get('/home', $injector->create(FormMenuController::class))
             ->middleware($injector->create(SessionManagerMiddleware::class))
@@ -74,6 +84,7 @@ final class HttpPipeline implements RequestHandlerInterface
             ->get('/notifications', $injector->create(NotificationController::class))
             ->middleware($injector->create(SessionManagerMiddleware::class))
             ->middleware($injector->create(AuthenticationMiddleware::class));
+
         $router
             ->get('/organisation', $injector->create(OrganisationController::class))
             ->middleware($injector->create(SessionManagerMiddleware::class))
