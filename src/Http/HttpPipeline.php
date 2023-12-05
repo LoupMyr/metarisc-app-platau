@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Strategy\NotFoundStrategy;
 use Laminas\Di;
 use League\Route\Router;
 use Psr\Container\ContainerInterface;
@@ -48,10 +49,10 @@ final class HttpPipeline implements RequestHandlerInterface
             throw new \Exception("Injector must be an instance of Di\InjectorInterface");
         }
 
-        /*$strategy = $injector->create(JsonStrategy::class);
+        //Strategy, pour redirection en cas d'erreur 404
+        $strategy = $injector->create(NotFoundStrategy::class);
         \assert($strategy instanceof StrategyInterface);
-        $router->setStrategy($strategy);*/
-        $router->middleware($injector->create(NotFoundMiddleware::class));
+        $router->setStrategy($strategy);
 
         // Connection route
         $router

@@ -56,9 +56,8 @@ class AuthenticationMiddleware implements MiddlewareInterface
                 $this->userCacheService->updateUserCache($email, $userCache);
             }
         } else {
-            throw new \Exception('error dans le middleware, au niveau de la session', 401);
-            /*header('Location: http://localhost:8000/');
-            exit;*/
+            header('Location: http://localhost:8000/');
+            exit;
         }
 
         return $handler->handle($request);
