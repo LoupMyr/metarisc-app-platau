@@ -25,9 +25,15 @@ class AuthenticationMiddleware implements MiddlewareInterface
         $this->metarisc->authenticate('oauth2:null', [
             'enable_refresh_token_grant_type' => true,
         ]);
-
+        // Si l'utilisateur est bien connecté
         if ($this->sessionManager->sessionExists() && $this->sessionManager->getStorage()->getMetadata('access_token')) {
-            $rep = $this->metarisc->request('GET', '/@moi', ['auth' => 'oauth']);
+            try {
+                $rep = $this->metarisc->request('GET', '/@moi', ['auth' => 'oauth']);
+                // Si l'utilisateur est connecté mais que son access et refresh token ont expiré, alors on le redirige vers la page de déconnexion
+            } catch (\Exception $e) {
+                header('Location: http://localhost:8000/logout?');
+                exit;
+            }
 
             if (200 != $rep->getStatusCode()) {
                 throw new \Exception('error dans le middleware, pas possible de faire la requete', 401);

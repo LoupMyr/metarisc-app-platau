@@ -20,7 +20,7 @@ class TokenPersistenceService implements TokenPersistenceInterface
      * En attente de la résolution du ticket URL.
      * https://github.com/kamermans/guzzle-oauth2-subscriber/issues/56.
      */
-    /** @psalm-suppress InvalidNullableReturnType */
+    /** @psalm-suppress InvalidNullableReturnType, NullableReturnStatement */
     public function restoreToken(TokenInterface $token) : TokenInterface|null
     {
         /** @var string|bool $access */
@@ -30,7 +30,6 @@ class TokenPersistenceService implements TokenPersistenceInterface
         /** @var string|bool $refresh */
         $refresh = $this->sessionManager->getStorage()->getMetadata('refresh_token');
         if (!$access) {
-            /* @psalm-suppress NullableReturnStatement */
             return null;
         }
 

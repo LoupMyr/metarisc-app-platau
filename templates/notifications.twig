@@ -7,7 +7,6 @@
     <br><br>
     <ul>
         {% for notification in notifications %}
-            <li>To: {{ notification.utilisateur_concerne_id }}</li>
             <li>{{ notification.date_creation|date('Y-m-d') }}</li>
             {% if notification.date_de_lecture is empty or notification.date_de_lecture is null %}
                 <li>Non lu</li>
