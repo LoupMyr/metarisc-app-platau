@@ -5,7 +5,6 @@ namespace App\Http\Controller;
 use Assert\Assertion;
 use Twig\Environment;
 use Metarisc\Metarisc;
-use App\Domain\Entity\UserCache;
 use Laminas\Session\SessionManager;
 use Laminas\Diactoros\ResponseFactory;
 use Psr\Http\Message\ResponseInterface;
@@ -32,7 +31,8 @@ class FormMenuController
         $body = $request->getParsedBody();
         if (isset($body) && !empty($body)) {
             if (isset($body['btnEnvoyer'])) {
-                $bool = true;
+                $bool     = true;
+                $idPlatau = $body['idPlatau'];
                 // ON REGARDE SI "connect" DU BODY ($_POST) EST "faux" ou "vrai"
                 if ('faux' == $body['connect']) {
                     $bool = false;
@@ -46,16 +46,26 @@ class FormMenuController
                         throw new \Exception('Unexepted error while changing your presence, try again later', 500);
                     }
                 }
+                // ON MET A JOUR LE "UserCache" SI LA VALEUR ACTUELLE DE "idPlatau" EST != DE CELLE SAISIE DANS LE FORMULAIRE
+                if ($userCache->getIdPlatau() != $idPlatau) {
+                    try {
+                        Assertion::string($idPlatau);
+                        $userCache->setIdPlatau($idPlatau);
+                        $this->userCacheService->updateUserCache($userCache->getEmail(), $userCache);
+                    } catch (\Exception $e) {
+                        throw new \Exception('Unexepted error while changing your Plat\'au ID, try again later', 500);
+                    }
+                }
             }
         }
 
         $connected = $userCache->getOption1();
         $profil    = $this->getProfil();
-
         // CREATION D'UN TABLEAU AVEC TOUTES LES VALEURES UTILES DU USER POUR TWIG
         $user = [
             'first_name' => $profil['first_name'],
             'last_name'  => $profil['last_name'],
+            'idPlatau'   => $userCache->getIdPlatau(),
             'email'      => $email,
             'connected'  => $connected,
         ];

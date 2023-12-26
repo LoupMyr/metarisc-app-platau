@@ -87,11 +87,11 @@ class AccessController
         $userCache = $this->userCacheService->getUserCacheByEmail($email_primary);
         if (null === $userCache) {
             // Si on connait pas l'utilisateur, on l'inscrit dans la base
-            $userCache = new UserCache($email_primary, false, $access_token, $refresh_token);
+            $userCache = new UserCache($email_primary, false, $access_token, $refresh_token, '');
             $this->userCacheService->addUserCache($userCache);
         } else {
             // Si on le connait, on met à jour son access token
-            $userCacheWithNewAccessToken = new UserCache($userCache->getEmail(), $userCache->getOption1(), $access_token, $refresh_token);
+            $userCacheWithNewAccessToken = new UserCache($userCache->getEmail(), $userCache->getOption1(), $access_token, $refresh_token, '');
             $this->userCacheService->updateUserCache($userCache->getEmail(), $userCacheWithNewAccessToken);
         }
 

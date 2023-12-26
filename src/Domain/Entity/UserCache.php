@@ -11,18 +11,21 @@ class UserCache
     private bool $option1;
     private string $access_token;
     private string $refresh_token;
+    private string $idPlatau;
 
     public function __construct(
         string $email,
         bool $option1,
         string $access_token,
-        string $refresh_token, )
-    {
+        string $refresh_token,
+        string $idPlatau,
+    ) {
         $this->id            = Uuid::uuid4()->toString();
         $this->email         = $email;
         $this->option1       = $option1;
         $this->access_token  = $access_token;
         $this->refresh_token = $refresh_token;
+        $this->idPlatau      = $idPlatau;
     }
 
     public function getId() : string
@@ -68,5 +71,15 @@ class UserCache
     public function setRefreshToken(string $refresh_token) : void
     {
         $this->refresh_token = $refresh_token;
+    }
+
+    public function getIdPlatau() : string
+    {
+        return $this->idPlatau;
+    }
+
+    public function setIdPlatau(string $idPlatau) : void
+    {
+        $this->idPlatau = $idPlatau;
     }
 }

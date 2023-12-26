@@ -9,5 +9,6 @@
         <field name="option1" type="boolean"/>
         <field name="access_token" type="text"/>
         <field name="refresh_token" type="text"/>
+        <field name="idPlatau" type="text"/>
     </entity>
 </doctrine-mapping>
