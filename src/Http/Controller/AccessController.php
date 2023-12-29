@@ -5,8 +5,8 @@ namespace App\Http\Controller;
 use Assert\Assertion;
 use Metarisc\Metarisc;
 use Metarisc\Model\Email;
-use App\Service\SessionService;
 use App\Domain\Entity\UserCache;
+use App\Domain\Service\SessionServiceInterface;
 use Laminas\Session\SessionManager;
 use Metarisc\Service\UtilisateursAPI;
 use Psr\Http\Message\ServerRequestInterface;
@@ -16,7 +16,7 @@ class AccessController
 {
     public function __construct(
         private Metarisc $metarisc,
-        private SessionService $sessionService,
+        private SessionServiceInterface $sessionService,
         private UserCacheServiceInterface $userCacheService,
         private SessionManager $sessionManager
     ) {

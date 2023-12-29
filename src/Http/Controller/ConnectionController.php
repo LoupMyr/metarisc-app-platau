@@ -2,11 +2,10 @@
 
 namespace App\Http\Controller;
 
+use App\Domain\Service\SessionServiceInterface;
 use Laminas;
 use Twig\Environment;
-use Metarisc\Metarisc;
 use Metarisc\Auth\OAuth2;
-use App\Service\SessionService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -14,7 +13,7 @@ class ConnectionController
 {
     public function __construct(
         private Environment $twig,
-        private SessionService $sessionService
+        private SessionServiceInterface $sessionService
     ) {
     }
 

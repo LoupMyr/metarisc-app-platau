@@ -2,12 +2,13 @@
 
 namespace App\Service;
 
+use App\Domain\Service\SessionServiceInterface;
 use Assert\Assertion;
 use Laminas\Session\SessionManager;
 use Psr\SimpleCache\CacheInterface;
 use Laminas\Session\Storage\SessionStorage;
 
-class SessionService
+class SessionService implements SessionServiceInterface
 {
     public function __construct(
         private SessionManager $sessionManager
@@ -42,14 +43,7 @@ class SessionService
         setcookie('access_token', $access, 0, '/', secure: true, httponly: true);
     }
 
-    private function setSessionStorage() : void
-    {
-        if (null == $this->sessionManager->getStorage()) {
-            $sessionStorage = new SessionStorage();
-            $this->sessionManager->setStorage($sessionStorage);
-        }
-    }
-
+    
     public function setSessionCookies(array $cookies) : void
     {
         $this->setSessionStorage();
@@ -59,18 +53,26 @@ class SessionService
             $this->sessionManager->getStorage()->setMetadata($key, $value);
         }
     }
-
+    
     public function hasSessionCookiesToken() : bool
     {
         return (bool) $this->sessionManager->getStorage()->getMetadata('access_token');
     }
-
+    
     public function getSessionCookiesToken() : mixed
     {
         if ($this->hasSessionCookiesToken()) {
             return $this->sessionManager->getStorage()->getMetadata('access_token');
         }
-
+        
         return null;
+    }
+    
+    private function setSessionStorage() : void
+    {
+        if (null == $this->sessionManager->getStorage()) {
+            $sessionStorage = new SessionStorage();
+            $this->sessionManager->setStorage($sessionStorage);
+        }
     }
 }
