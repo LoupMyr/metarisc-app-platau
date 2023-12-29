@@ -8,6 +8,8 @@ use Assert\Assertion;
 use Twig\Environment;
 use Metarisc\Metarisc;
 use League\Fractal\Manager;
+use Psr\Log\LoggerInterface;
+use App\Service\LoggerService;
 use App\Service\SessionService;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
@@ -33,6 +35,7 @@ use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use App\Domain\Repository\UserCacheRepositoryInterface;
+use App\Domain\Service\SessionServiceInterface;
 use kamermans\OAuth2\Persistence\TokenPersistenceInterface;
 
 class Container extends ServiceManager
@@ -130,7 +133,7 @@ class Container extends ServiceManager
         );
 
         $container->setFactory(
-            SessionService::class,
+            SessionServiceInterface::class,
             function (ContainerInterface $container) {
                 $sessionsManager = $container->get(SessionManager::class);
                 \assert($sessionsManager instanceof SessionManager);
@@ -162,7 +165,7 @@ class Container extends ServiceManager
         $container->setFactory(
             TokenPersistenceInterface::class,
             function (ContainerInterface $container) {
-                $sessionService = $container->get(SessionService::class);
+                $sessionService = $container->get(SessionServiceInterface::class);
                 \assert($sessionService instanceof SessionService);
                 $sessionManager = $container->get(SessionManager::class);
                 \assert($sessionManager instanceof SessionManager);
@@ -175,6 +178,13 @@ class Container extends ServiceManager
             SessionManager::class,
             function () {
                 return new SessionManager();
+            }
+        );
+
+        $container->setFactory(
+            LoggerInterface::class,
+            function () {
+                return new LoggerService();
             }
         );
 

@@ -9,7 +9,8 @@ RUN docker-php-ext-install bcmath
 RUN docker-php-ext-install pdo_mysql
 
 # Zip (Composer downloader)
-RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev && apt-get clean && rm -rf /var/lib/apt/lists/* && docker-php-ext-install zip
+RUN apt-get update && apt-get install -y cron && apt-get install -y nano && apt-get install -y --no-install-recommends libzip-dev && apt-get clean && rm -rf /var/lib/apt/lists/* && docker-php-ext-install zip
+RUN (echo "* * * * * /usr/local/bin/php /var/www/html/src/Command/ImportUsers.php" | crontab -)
 
 # Apache2 configuration
 ENV PORT 80
@@ -37,6 +38,7 @@ COPY src src
 COPY templates templates
 COPY .env .env
 
+RUN service cron start
 # Insert application
 COPY boot.sh boot.sh
 CMD ["bash", "/var/www/html/boot.sh"]

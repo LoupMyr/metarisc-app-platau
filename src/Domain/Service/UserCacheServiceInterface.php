@@ -13,4 +13,6 @@ interface UserCacheServiceInterface
     public function updateUserCache(string $userCache_email, UserCache $userCache) : void;
 
     public function getUserCacheByEmail(string $email) : ?UserCache;
+
+    public function getAllUserCache() : array;
 }

@@ -44,6 +44,11 @@ class UserCacheRepository implements UserCacheRepositoryInterface
         );
     }
 
+    public function getAll() : array
+    {
+        return $this->entityManager->getRepository(UserCache::class)->findAll();
+    }
+
     public function deleteByEmail(string $email) : void
     {
         $userCache = $this->getByEmail($email);
