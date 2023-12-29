@@ -22,6 +22,11 @@ interface UserCacheRepositoryInterface
     public function getByEmail(string $email) : UserCache|null;
 
     /**
+     * Récupère tous les userCache.
+     */
+    public function getAll() : array;
+
+    /**
      * Supprime un userCache grâce à son email donné.
      */
     public function deleteByEmail(string $email) : void;

@@ -32,4 +32,9 @@ class UserCacheService implements UserCacheServiceInterface
     {
         return $this->repository->getByEmail($email);
     }
+
+    public function getAllUserCache() : array
+    {
+        return $this->repository->getAll();
+    }
 }
